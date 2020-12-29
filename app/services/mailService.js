@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-console */
 const nodemailer = require('nodemailer')
 const mail = require('../common/mail')
 const defaultEnvironment = require('../environments/environment.dev')
@@ -59,8 +61,9 @@ module.exports = {
             logmail.updateLogMail(usableMailConfig.from, usableMailConfig.to, usableMailConfig.html, totalQuery, resultQuery)
             const transporter = nodemailer.createTransport(usableMailConfig)
             transporter.sendMail(usableMailConfig).then(
-                (success) => {},
+                (success) => {console.log(success)},
                 (error) => {
+                    console.log(error)
                     throw new Error({
                         code: 4,
                     })

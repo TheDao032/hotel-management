@@ -1,0 +1,10 @@
+<div style="display: inline-block;">
+    <div class="rating">
+        <div class="base-star">
+            <i class="material-icons" *ngFor="let i of starArr">star</i>
+        </div>
+        <div class="rating-star" [ngStyle]="{ width: ratingPercent }">
+            <i class="material-icons" *ngFor="let i of starArr">star</i>
+        </div>
+    </div>
+</div>

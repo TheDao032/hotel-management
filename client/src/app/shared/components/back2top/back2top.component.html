@@ -1,0 +1,9 @@
+<button
+    [class.hide]="totalRowInTable < rowToShowButton ? true : false"
+    mat-fab
+    color="primary"
+    class="btn-back"
+    (click)="scroll2Top()"
+>
+    <mat-icon>arrow_upward</mat-icon>
+</button>

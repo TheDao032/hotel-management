@@ -5,12 +5,10 @@ import { MatDialogRef } from '@angular/material'
 //Update By TheDao
 import { RoutingMypage } from './masterpage.routes'
 import { MasterpageComponent } from './masterpage.component'
-import { MypageComponent } from './mypage/mypage.component'
-import { TrainingInfoComponent, CancelPolicyComponent, ListShainComponent } from './training/training-info/training-info.component'
+import { homePageComponent } from './homepage/homepage.component'
 import { PermissionComponent } from './maintenance/permission/permission.component'
 import { StringByteLimitPipe } from '../pipes/stringByteLimit'
 import { PermissionDialogComponent } from './maintenance/permission/permission-dialog'
-import { JoinerListComponent, CheckInComponent } from './training/training-info/joiner-list/joiner-list.component'
 import { MailSettingsComponent } from './settings/mail-settings/mail-settings.component'
 import { EditMailComponent } from './settings/mail-settings/edit-mail/edit-mail.component'
 import { MailSentComponent } from './settings/mail-settings/mail-sent'
@@ -29,13 +27,9 @@ import { ConfirmDeleteTagDialogComponent } from './settings/tags-management/conf
     declarations: [
         PermissionDialogComponent,
         MasterpageComponent,
-        MypageComponent,
-        TrainingInfoComponent,
-        CancelPolicyComponent,
-        ListShainComponent,
+        homePageComponent,
         PermissionComponent,
         StringByteLimitPipe,
-        JoinerListComponent,
         MailSettingsComponent,
         EditMailComponent,
         MailSentComponent,
@@ -45,19 +39,15 @@ import { ConfirmDeleteTagDialogComponent } from './settings/tags-management/conf
         CalendarComponent,
         InsertUpdateCalendarComponent,
         ConfirmDiscardComponent,
-        CheckInComponent,
         TagsManagementComponent,
         InsertUpdateTagComponent,
         ConfirmDeleteTagDialogComponent,
     ],
     exports: [],
     entryComponents: [
-        CancelPolicyComponent,
-        ListShainComponent,
         PermissionDialogComponent,
         MailSentComponent,
         ConfirmDiscardComponent,
-        CheckInComponent,
         InsertUpdateTagComponent,
         ConfirmDeleteTagDialogComponent,
     ],

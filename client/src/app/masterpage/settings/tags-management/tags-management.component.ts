@@ -1,13 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { SharedService } from '@app/shared/shared.service';
 import { AuthService } from '@app/auth/auth.service';
-import { TagsService } from '@app/masterpage/training/training-info/tags/tags.service';
 import { FormControl } from '@angular/forms';
 import { InsertUpdateTagComponent } from './insert-update-tag/insert-update-tag.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmDeleteTagDialogComponent } from './confirm-delete-tag-dialog';
 import * as common from '@app/common'
-import { ImportKensyuuDialogComponent } from '@app/masterpage/import/kensyuu/importKensyuuDialog';
 
 @Component({
     selector: 'app-tags-management',
@@ -48,7 +46,6 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
     constructor(
         private sharedSevice: SharedService,
         private auth: AuthService,
-        private tagsService: TagsService,
         private dialog: MatDialog,
         public snackBar: MatSnackBar,
     ) {
@@ -66,7 +63,6 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
                 document.getElementById('file').click()
             })
         )
-        this.getAllTag();
     }
 
     ngAfterViewInit() {
@@ -80,15 +76,6 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
         const sfh = this.sf.nativeElement.clientHeight
         const tbHeight = wh - 48 - sfh - 80
         this.scrollH = tbHeight + 'px'
-    }
-
-    getAllTag() {
-        this.tagsService.getAllTag().subscribe((res) => {
-            this.tagsList = res.data2
-            this.filteredOptions = this.tagsList
-            this.allTags = res.data5
-            this.data = res.data4
-        })
     }
 
     /**
@@ -206,7 +193,6 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
             }
 
             setTimeout(() => this.snackBar.dismiss(), 3000)
-            this.getAllTag()
         })
     }
 
@@ -222,36 +208,6 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
                 this.snackBar.open('削除に失敗しました。')
             }
             setTimeout(() => this.snackBar.dismiss(), 3000)
-            this.getAllTag()
-        })
-    }
-
-    searchTag() {
-        // console.log(this.selectTagFormControl.value)
-        if (this.selectTagFormControl.value !== '') {
-            // const isChild = this.tagsList.find((e) => e.id_tag === this.selectTagFormControl.value)
-            this.tagsService.search(this.selectTagFormControl.value).subscribe((res) => {
-                this.data = res.data
-                this.setHeight()
-            })
-        }
-    }
-
-    btnDownload() {
-        this.tagsService.downloadTagList()
-    }
-
-    openImportDialog(injectMessage, title, hasError = false) {
-        const dialogRef = this.dialog.open(ImportKensyuuDialogComponent, {
-            data: {
-                message: injectMessage,
-                title,
-                hasError,
-            },
-        })
-        dialogRef.afterClosed().subscribe((noti) => {
-            if (!noti) return
-            // if (noti.isConfirmed) this.importKensyuu()
         })
     }
 
@@ -264,32 +220,4 @@ export class TagsManagementComponent implements OnInit, AfterViewInit {
         this.filename = files[0].name
     }
 
-    btnUpload() {
-        const errFlg = this.myFile == null || this.myFile.name === undefined
-        this.message.myfile = ((this.myFile == null || this.myFile.name === undefined) && common.message.FL003) || ''
-
-        // this.q_mess = !errFlg && common.message.FL007(this.ki)
-        // if (!errFlg) this.openImportDialog(this.q_mess, '確認')
-        // else {
-        //     this.openImportDialog(this.message.ki || this.message.myfile, '通知', true)
-        // }
-        const _formData = new FormData()
-        _formData.append('fileupload', this.myFile, this.myFile.name)
-        const requestdata = _formData
-        this.tagsService.importFile(requestdata).subscribe(
-            (res) => {
-                this.openImportDialog(common.message.FL001, '通知', true)
-                this.fileimport.nativeElement.value = ''
-                this.myFile = null
-                this.filename = ''
-                this.getAllTag()
-            },
-            (err) => {
-                this.openImportDialog(common.message.FL002 + `\n ${err.error.error}`, '通知', true)
-                this.fileimport.nativeElement.value = ''
-                this.myFile = null
-                this.filename = ''
-            }
-        )
-    }
 }

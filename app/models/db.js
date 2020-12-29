@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-console */
+/* eslint-disable no-return-assign */
 const pg = require('pg')
 const fs = require('fs')
 const path = require('path')
@@ -12,8 +15,8 @@ types.setTypeParser(dateOID, (v) => v)
 
 const environments = require('../environments/environment')
 
-const attribule = {
-}
+/* const attribule = { */
+/* } */
 /*
  *- Gọi tới database postgre
  *- Lưu lại log các query đã gọi tới postgre tại models/logs/{tháng + name}postgrelog.txt

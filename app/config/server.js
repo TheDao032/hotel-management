@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const express = require('express')
 const bodyParser = require('body-parser')
 const errorHandler = require('errorhandler')

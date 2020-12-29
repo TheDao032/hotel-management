@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { TagsService } from '@app/masterpage/training/training-info/tags/tags.service'
 @Component({
     template: `
         <h2 mat-dialog-title>確認</h2>
@@ -21,29 +20,16 @@ import { TagsService } from '@app/masterpage/training/training-info/tags/tags.se
         </mat-dialog-actions>
     `,
     styles: [],
-    providers: [TagsService],
+    providers: [],
 })
 export class ConfirmDeleteTagDialogComponent {
     dialogMessage = `「${this.parentData.name}」タグを削除してよろしいでしょうか？`
     constructor(
         public selfDialog: MatDialogRef<ConfirmDeleteTagDialogComponent>,
-        private tagsService: TagsService,
         @Inject(MAT_DIALOG_DATA) public parentData: any
     ) {
     }
 
     confirmDelete() {
-        this.tagsService.deleteTag(this.parentData.id).subscribe((res) => {
-            this.selfDialog.close({
-                type: 'delete',
-                success: true,
-            })
-        }),
-        (err) =>{
-            this.selfDialog.close({
-                type: 'delete',
-                success: false,
-            })
-        }
     }
 }
