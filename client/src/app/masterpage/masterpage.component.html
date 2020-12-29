@@ -1,0 +1,243 @@
+<div>
+    <!-- side nav -->
+    <mat-sidenav-container class="nav-container" (backdropClick)="sidenav.close()">
+        <mat-sidenav #sidenav class="nav-sidenav">
+            <mat-nav-list>
+                <a mat-list-item class="main-item" routerLinkActive="active" routerLink="/home">
+                    <mat-icon>home</mat-icon>
+                    <span>ホーム</span>
+                </a>
+
+                <!-- Updated By Giang 20201202 -->
+                <!-- <a mat-list-item class="main-item" routerLinkActive="active" [matMenuTriggerFor]="sublistTraning" routerLink="/training/list"> -->
+                <a mat-list-item class="main-item" routerLinkActive="active" [matMenuTriggerFor]="sublistTraning">
+                    <mat-icon>list</mat-icon>
+                    <span>研修一覧</span>
+                </a>
+                <!-- <a mat-list-item class="main-item" routerLinkActive="active" >
+                    <mat-icon>list</mat-icon>
+                    <span>受講状況確認</span>
+                </a>
+                <a mat-list-item class="main-item" routerLinkActive="active" >
+                    <mat-icon>list</mat-icon>
+                    <span>受講履歴</span>
+                </a>
+                <a mat-list-item class="main-item" routerLinkActive="active" >
+                    <mat-icon>list</mat-icon>
+                    <span>アンケート状況確認</span>
+                </a>
+                <a mat-list-item class="main-item"　routerLink="/statistics/metabase-charts" routerLinkActive="active">
+                    <mat-icon>list</mat-icon>
+                    <span>チャート</span>
+                </a> -->
+                <!-- End update -->
+
+                <a mat-list-item class="main-item" routerLinkActive="active" *ngIf="permission_cd === '99'" routerLink="/training/approval">
+                    <mat-icon>list</mat-icon>
+                    <span>研修承認</span>
+                </a>
+                <a mat-list-item class="main-item" routerLinkActive="active" *ngIf="permission_cd === '99' || permission_cd === '70'" routerLink="/training/apply-list">
+                    <mat-icon>list</mat-icon>
+                    <span>受講状況確認</span>
+                </a>
+                <!--End Update-->
+                <a mat-list-item class="main-item" routerLinkActive="active" *ngIf="permission_cd === '99'" [matMenuTriggerFor]="adminMenu">
+                    <mat-icon>settings</mat-icon>
+                    <span>管理者</span>
+                    <a routerLink="/history/employee" style="display: none"></a>
+                    <a routerLink="/import/kensyuu" style="display: none"></a>
+                    <a routerLink="/import/anketto" style="display: none"></a>
+                    <a routerLink="/export/anketto" style="display: none"></a>
+                </a>
+                <a mat-list-item class="main-item" *ngIf="permission_cd == '99'" [matMenuTriggerFor]="maintenanceMenu" routerLinkActive="active">
+                    <mat-icon>verified_user</mat-icon>
+                    <span>メンテナンス</span>
+                    <a routerLink="/maintenance" style="display: none"></a>
+                </a>
+                <a mat-list-item class="main-item" [matMenuTriggerFor]="linkMenu">
+                    <mat-icon>dashboard</mat-icon>
+                    <span>問合せ</span>
+                </a>
+            </mat-nav-list>
+
+            <!-- submenu -->
+            <!-- Updated By Giang in 2020/12/04 -->
+            <!-- Kenshyuu ichiran submenu -->
+            <!-- Deta kara shuutoku shimasu. Toriaezu koutei de setto shimasu. -->
+            <mat-menu #sublistTraning="matMenu" yPosition="below" xPosition="before">
+                <!-- <button mat-menu-item class="sub-menu-item" routerLink="/training/list" routerLinkActive="active">すべて</button>
+                ---------------------- -->
+
+                <div *ngFor="let item of listLvl1; last as isLast">
+                    <!--Add Click Event (reLoad(id)) By TheDao-->
+                    <button mat-menu-item class="sub-menu-item" (click)="reLoad(item.id)" routerLink="/training/list/{{ item.id }}" routerLinkActive="active">
+                        {{ item.name }}
+                    </button>
+
+                        <div *ngFor="let item2 of filterChildOfParent(item.id)">
+
+                            <button mat-menu-item class="sub-menu-item padding-left-submenu" (click)="reLoad(item2.id)" routerLink="/training/list/{{item2.id}}" routerLinkActive="active">
+                                {{ item2.name }}
+                            </button>
+                                <div *ngFor="let item3 of filterChildOfParentLv3(item2.id)">
+
+                                    <button mat-menu-item class="sub-menu-item padding-left-submenu_2" (click)="reLoad(item3.id)" routerLink="/training/list/{{item3.id}}" routerLinkActive="active">
+                                        {{ item3.name }}
+                                    </button>
+                                </div>
+                        </div>
+
+                    <span *ngIf="!isLast">
+                        --------------------------------
+                    </span>
+
+                </div>
+
+
+                <!-- <button mat-menu-item class="sub-menu-item padding-left-submenu" routerLink="/training/list" routerLinkActive="active">ITスキル基礎研修</button>
+                <button mat-menu-item class="sub-menu-item padding-left-submenu" routerLink="/training/list" routerLinkActive="active">テーマ別技術研修</button>
+                <button mat-menu-item class="sub-menu-item padding-left-submenu" routerLink="/training/list" routerLinkActive="active">カタログ研修</button> -->
+            </mat-menu>
+
+            <!-- kanri sub menu -->
+            <mat-menu #adminMenu="matMenu" yPosition="below" xPosition="before">
+                <button mat-menu-item class="sub-menu-item" routerLink="/history/employee" routerLinkActive="active">受講履歴</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/import/kensyuu" routerLinkActive="active">カタログ登録</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/import/anketto" routerLinkActive="active">アンケート登録</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/export/anketto" routerLinkActive="active">アンケート回答結果</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/settings/mail" routerLinkActive="active">メール設定</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/settings/recommend" routerLinkActive="active">レコメンド設定</button>
+
+                <!-- Close By Giang in 2020/12/04 -->
+                <!-- <button mat-menu-item class="sub-menu-item" routerLink="/statistics/metabase-charts" routerLinkActive="active">チャート</button> -->
+                <!-- End Update -->
+
+                <button mat-menu-item class="sub-menu-item" routerLink="/settings/saved-setting" routerLinkActive="active">共通</button>
+
+
+                <!--Close at 2019/10/28-->
+                <!-- <button mat-menu-item class="sub-menu-item" routerLink="/settings/calendar" routerLinkActive="active">
+                    Calendar
+                </button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/settings/qr" routerLinkActive="active">
+                    QR
+                </button> -->
+                <!--Close at 2019/10/28-->
+                <button mat-menu-item class="sub-menu-item" routerLink="/settings/tag-management" routerLinkActive="active">タグ管理</button>
+                <button mat-menu-item class="sub-menu-item" routerLink="/import/kensyuu-honbu" routerLinkActive="active">本部研修登録</button>
+                <!-- <button
+                    mat-menu-item
+                    class="sub-menu-item"
+                    routerLink="/statistics/charts"
+                    routerLinkActive="active"
+                >
+                    Charts
+                </button> -->
+            </mat-menu>
+            <!-- maintenance sub menu -->
+            <mat-menu #maintenanceMenu="matMenu" yPosition="below" xPosition="before">
+                <button mat-menu-item class="sub-menu-item" routerLink="/maintenance/permission" routerLinkActive="active">権限設定</button>
+            </mat-menu>
+            <!-- link list menu -->
+            <mat-menu #linkMenu="matMenu" yPosition="below" xPosition="before">
+                <div mat-menu-item class="sub-menu-item">
+                    <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=5Rx-18Fgo0KvKyRtk3qDC2hcSqPVtGdKjJLOaQAtootUREI5OFAyN0QzUFZESDU3U1VDODVXMUFXVy4u" target="_blank"> 問合せ入力 </a>
+                </div>
+                <div mat-menu-item class="sub-menu-item">
+                    <a href="https://forms.office.com/Pages/AnalysisPage.aspx?id=5Rx-18Fgo0KvKyRtk3qDC2hcSqPVtGdKjJLOaQAtootUREI5OFAyN0QzUFZESDU3U1VDODVXMUFXVy4u&AnalyzerToken=VRRv6sYpZVUDEkdIfb4gxiiMLAKKRFxH" target="_blank"> 皆の問い合わせ </a>
+                </div>
+            </mat-menu>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="nav-content">
+            <!-- header -->
+            <mat-toolbar class="header">
+                <!-- <mat-toolbar-row class="row-1"> -->
+                <mat-toolbar-row class="row-1" [ngStyle]="{ 'background-color': setting.header_color }">
+                    <div fxLayout="row" fxFlexFill>
+                        <div class="icon-cover">
+                            <button mat-icon-button (click)="sidenav.toggle()">
+                                <mat-icon
+                                    [ngStyle]="{
+                                        color: setting.header_menu_icon_color
+                                    }"
+                                    >menu</mat-icon
+                                >
+                            </button>
+                        </div>
+                        <img fxShow fxHide.xs="true" style="width: 94px" src="assets/images/cubelogo.png" alt="CUBE SYSTEM, KENSYUU KANRI LOGO" />
+                        <div
+                            id="title"
+                            [ngStyle]="{
+                                color: setting.header_title_font_color
+                            }"
+                        >
+                            <span>{{ title }}</span>
+                        </div>
+                        <div class="icon-cover">
+                            <!-- <div style="font-size: 12px; text-align: center; color: #03A9F4"> -->
+                            <!-- <div
+                                style="font-size: 12px; text-align: center; color: white"
+                            >
+                                <span>
+                                    {{ now | date: 'yyyy/MM/dd HH:mm:ss' }}
+                                </span>
+                            </div> -->
+                            <div
+                                style="font-size: 12px; text-align: center"
+                                [ngStyle]="{
+                                    color: setting.header_info_font_color
+                                }"
+                            >
+                                <span>
+                                    {{ now | date: 'yyyy/MM/dd HH:mm:ss' }}
+                                </span>
+                            </div>
+                            <!-- <button mat-button fxShow fxHide.xs="true" [matMenuTriggerFor]="menu"
+                                style="color: #03A9F4"> -->
+                            <button
+                                mat-button
+                                fxShow
+                                fxHide.xs="true"
+                                [matMenuTriggerFor]="menu"
+                                [ngStyle]="{
+                                    color: setting.header_info_font_color
+                                }"
+                            >
+                                <span> ようこそ {{ username }} さん</span>
+                                <mat-icon>exit_to_app</mat-icon>
+                            </button>
+                            <!-- <button mat-icon-button fxHide fxShow.xs="true" [matMenuTriggerFor]="menu"
+                                style="color: #03A9F4"> -->
+                            <button
+                                mat-icon-button
+                                fxHide
+                                fxShow.xs="true"
+                                [matMenuTriggerFor]="menu"
+                                [ngStyle]="{
+                                    color: setting.header_info_font_color
+                                }"
+                            >
+                                <mat-icon>exit_to_app</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="logout()">YES</button>
+                                <button mat-menu-item>NO</button>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+
+            <!-- app centent -->
+            <div class="app-content">
+                <router-outlet></router-outlet>
+            </div>
+
+            <!-- <div class="footer"> -->
+            <div class="footer" [ngStyle]="{ 'background-color': setting.footer_color }">
+                <span [ngStyle]="{ color: setting.footer_font_color }">Copyright © CUBE SYSTEM VIETNAM CO.,LTD.</span>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

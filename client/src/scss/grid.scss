@@ -1,0 +1,20 @@
+@mixin split($count, $gap: 16px) {
+    margin-right: $gap;
+    width: calc((100% - #{$gap} * (#{$count} - 1)) / #{$count});
+
+    &:nth-child(#{$count}n) {
+        margin-right: 0;
+    }
+}
+
+@mixin flex() {
+    display: flex;
+    /* Safari */
+    display: -webkit-flex;
+}
+
+@mixin wrap() {
+    flex-wrap: wrap;
+    /* Safari */
+    -webkit-flex-wrap: wrap;
+}

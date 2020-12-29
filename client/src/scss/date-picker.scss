@@ -1,0 +1,16 @@
+@import 'assets/libs/jquery-ui-1.12.1.custom/jquery-ui.custom.css';
+$start-date-color: #ffcc99;
+$end-date-color: #668cff;
+
+.highlight-start .ui-state-default {
+    background: $start-date-color !important;
+}
+
+.highlight-end .ui-state-default {
+    background: $end-date-color !important;
+}
+
+.start-color {
+    color: $start-date-color;
+    font-size: 18px;
+}

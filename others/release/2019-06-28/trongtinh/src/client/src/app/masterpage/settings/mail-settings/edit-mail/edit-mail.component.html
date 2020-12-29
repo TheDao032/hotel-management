@@ -1,0 +1,50 @@
+<div class="container">
+    <!-- <div class="title btn-update">{{ 'To: ' + data.mail }}</div> -->
+    <div *ngFor="let header of mailTemplateHeader">
+        <div class="header" *ngIf="header.display">
+            <div class="header-title">
+                <mat-checkbox color="primary" [(ngModel)]="header.id">
+                    {{ header.name + ':' }}
+                </mat-checkbox>
+            </div>
+
+            <div class="header-input-div">
+                <input [(ngModel)]="mailFormData[header.id + header.suffix]" placeholder="" class="header-input-input" />
+            </div>
+        </div>
+        <!-- <div class="header-title">
+            <mat-checkbox color="primary" [(ngModel)]="mailFormData[header.id]">
+                {{ header.name + ':' }}
+            </mat-checkbox>
+        </div> -->
+    </div>
+    <div style="padding: 3px">以下のメール内容です。</div>
+    <div class="body">
+        <div class="body-left-parent">
+            <div class="body-left-child" *ngFor="let bodyLeft of mailTemplateBodyLeft">
+                <mat-checkbox color="primary" [(ngModel)]="mailFormData[bodyLeft.id]">
+                    {{ bodyLeft.name }}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div class="body-right-parent">
+            <div class="body-right-child" *ngFor="let bodyRight of mailTemplateBodyRight">
+                <mat-checkbox color="primary" [(ngModel)]="mailFormData[bodyRight.id]">
+                    {{ bodyRight.name }}
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="footer" *ngFor="let footer of mailTemplateFooter">
+        <div class="footer-checkbox-div">
+            <mat-checkbox color="primary" [(ngModel)]="mailFormData[footer.id]">{{ footer.name }}</mat-checkbox>
+        </div>
+        <div class="footer-input-div">
+            <textarea [(ngModel)]="mailFormData[footer.id + footer.suffix]" rows="4" class="footer-input-textarea"> </textarea>
+        </div>
+    </div>
+    <div class="submit">
+        <button mat-button class="btn-update" (click)="saveMail()">保存</button>
+    </div>
+</div>

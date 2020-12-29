@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "module": "CommonJS",
+        "target": "ES5",
+        "outDir": "./build"
+    },
+    "include": ["./src/*.ts"]
+}

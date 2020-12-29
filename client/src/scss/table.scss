@@ -1,0 +1,43 @@
+div.table-cover {
+    min-height: 300px;
+}
+
+p-table {
+    %common-text {
+        font-size: 12px !important;
+        font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro',
+            'メイリオ', 'Meiryo', 'Osaka', 'MS Pゴシック', 'MS PGothic',
+            sans-serif;
+    }
+
+    .ui-table-sort-icon {
+        font-size: 12px;
+    }
+
+    th {
+        @extend %common-text;
+        font-family: sans-serif;
+        text-align: center;
+        font-size: 14px !important;
+        background-color: forestgreen !important;
+        color: white !important;
+
+        .ui-table-sort-icon {
+            color: white !important;
+        }
+    }
+
+    td {
+        @extend %common-text;
+        font-size: 12px !important;
+
+        a {
+            color: #337ab7;
+        }
+    }
+}
+
+.mat-menu-panel {
+    width: 200px;
+    margin-left: 10px;
+}

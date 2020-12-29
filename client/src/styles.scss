@@ -1,0 +1,160 @@
+/* You can add global styles to this file, and also import other style files */
+
+// libraris
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/themes/nova-light/theme.css';
+@import '~primeng/resources/primeng.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/dist/css/bootstrap-theme.min.css';
+// custom libraries
+@import 'scss/table.scss';
+@import 'scss/primeng.scss';
+@import 'scss/date-picker.scss';
+@import 'scss/color.scss';
+@import 'scss/ie.scss';
+@import 'scss/flex.scss';
+// material
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'scss/material-theme.scss';
+@import '@fullcalendar/core/main.css';
+@import '@fullcalendar/daygrid/main.css';
+@import '@fullcalendar/timegrid/main.css';
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.ng2-carouselamos-wrapper {
+    width: calc(100% - 100px) !important;
+}
+
+.highlight .mat-calendar-body-cell-content {
+    background-color: orange;
+}
+
+// prevent margin
+// * > :first-child {
+//   margin-top: 0 !important;
+//   margin-left: 0 !important;
+// }
+// * > :last-child {
+//   margin-bottom: 0 !important;
+//   margin-right: 0 !important;
+// }
+body {
+    font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', 'Osaka', 'MS Pゴシック', 'MS PGothic', sans-serif;
+}
+
+textarea {
+    resize: none !important;
+}
+
+label,
+p,
+input,
+select,
+button,
+textarea {
+    font-size: 12px !important;
+}
+
+input {
+    border-color: lightgray !important;
+}
+
+simple-snack-bar span {
+    margin: auto;
+}
+
+.btn-fix {
+    width: 100px;
+    height: 36px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.btn-back {
+    z-index: 9999;
+    position: fixed !important;
+    bottom: 50px;
+    right: 20px;
+    opacity: 0.5;
+}
+
+.ki-form .mat-form-field-infix {
+    width: 150px !important;
+}
+
+.link {
+    cursor: pointer;
+    color: rgb(0, 0, 238);
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.error-message {
+    color: red;
+}
+
+.custom-panel {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    .row {
+        margin-top: 10px;
+    }
+    .title {
+        color: blue;
+        font-weight: 900;
+        margin-top: 0px;
+        padding-left: 10px;
+    }
+    .column {
+        display: table-cell;
+        font-size: 12px;
+    }
+}
+
+.ui-datepicker {
+    top: 33px !important;
+    td {
+        padding: 0 !important;
+    }
+}
+
+.word-wrap {
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal !important;
+}
+
+button:focus {
+    outline: none;
+}
+
+.ui-table-scrollable-body {
+    scroll-behavior: smooth;
+}
+
+.cdk-overlay-pane {
+    // overflow-y: auto;
+    transform: translateX(-16px) translateY(20px) !important;
+}
+
+a {
+    cursor: pointer;
+}

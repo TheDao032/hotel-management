@@ -1,0 +1,28 @@
+.d-flex {
+    display: flex;
+    display: -webkit-flex;
+
+    &.wrap {
+        flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+    }
+
+    &.ai-center {
+        align-items: center;
+    }
+
+    &.j-end {
+        justify-content: flex-end;
+    }
+
+    &.column {
+        flex-direction: column;
+    }
+
+    @media only screen and (max-width: 599px) {
+        &.wrap-on-mobile {
+            flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+        }
+    }
+}

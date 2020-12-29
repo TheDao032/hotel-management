@@ -1,0 +1,53 @@
+$color-blue: #2962ff;
+$color-light-blue: #03a9f4;
+$color-green: #00c853;
+$color-amber: #ffc107;
+$color-red: #c9302c;
+
+$star-bg: grey;
+$star: #ffc107;
+
+button.btn-search {
+    background-color: $color-blue;
+    color: white;
+}
+
+button.btn-download {
+    background-color: $color-green;
+    color: white;
+    //width: 120px;
+}
+
+button.btn-clear {
+    background-color: $color-light-blue;
+    color: white;
+}
+
+.lightBlue {
+    color: $color-light-blue;
+}
+
+button.btn-update {
+    background-color: $color-blue;
+    color: white;
+}
+
+button.btn-reg {
+    background-color: $color-green;
+    color: white;
+}
+
+button.btn-accept {
+    background-color: $color-green;
+    color: white;
+}
+
+button.btn-cancel {
+    background-color: $color-amber;
+    color: white;
+}
+
+button.btn-delete {
+    background-color: $color-red;
+    color: white;
+}

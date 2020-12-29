@@ -1,0 +1,256 @@
+<div fxLayout="column" fxFlex="100" fxLayoutGap="16px">
+    <mat-expansion-panel #sf (afterCollapse)="setHeight()" [expanded]="true" (afterExpand)="setHeight()">
+        <mat-expansion-panel-header class="custom">
+        </mat-expansion-panel-header>
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="16px">
+            <div fxFlex.gt-sm="100%" fxFlex.gt-lg="100%">
+                <div id="filter" fxFlexFill>
+                    <!-- <div fxLayoutAlign="end center">
+                            <strong>タグ</strong>
+                    </div> -->
+                    <div class="filter-item">
+                        <mat-form-field>
+                            <mat-select (openedChange)="openedChange($event)" placeholder="タグ"
+                                [formControl]="selectTagFormControl">
+                                <div class="select-container">
+                                    <mat-optgroup>
+                                        <mat-form-field style="width:100%;">
+                                            <input #search autocomplete="off" placeholder="" aria-label="Search"
+                                                matInput [formControl]="searchTextboxControl">
+                                            <button [disableRipple]="true" *ngIf="search.value" matSuffix
+                                                mat-icon-button aria-label="Clear" (click)="clearSearch($event)">
+                                                <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </mat-optgroup>
+                                    <mat-optgroup *ngIf="filteredOptions.length == 0">
+                                        <!-- <button mat-button (click)="createNewOption()">Would you like to add
+                                            "{{newData.tag_name}}"</button> -->
+                                        <span>"{{newData.tag_name}}"のタグが存在していません。</span>
+                                    </mat-optgroup>
+                                    <mat-option value="0">すべて</mat-option>
+                                    <mat-option (onSelectionChange)="selectionChange($event)"
+                                        *ngFor="let option of filteredOptions" [value]="option.id_tag">
+                                        {{option.tag_name}}
+                                    </mat-option>
+                                </div>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                    <div fxLayout="row" fxFlex="100px" fxFlexOffset="15px">
+                         <button mat-raised-button id="btn-search" (click)="searchTag()"
+                            class="btn-fix btn-search" style="width:100px; margin-right: 15px">
+                            検索
+                        </button>
+                    </div>
+
+                    <div fxLayout="row wrap" fxFlex.gt-md="35" fxFlex.md="60" fxFlex.sm="100" fxFlex.xs="100" fxLayoutAlign.gt-md="center start" fxLayoutAlign.md="center start">
+                        <div fxLayout="row" fxFlex.gt-xs="200px" fxFlex.xs="155px" class="import-file-div">
+                            <input type="file" #fileimport id="file" name="myFile" (change)="fileChange(fileimport.files)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                            <input type="text" class="form-control" id="fakeFileImport" value="{{ filename }}" style="height: 36px" placeholder="ファイルが選択されていません" readonly />
+                            <span class="input-group-btn">
+                                <button class="btn-fix btn-search" type="button" id="fakeBrowseFileImport">
+                                    ブラウズ...
+                                </button>
+                            </span>
+                        </div>
+
+                        <div fxLayout="row" fxFlex.gt-md="48" fxFlex.md="40" fxFlex.sm="250px" fxFlex.xs="100" fxLayoutAlign.gt-xs="end start" fxLayoutAlign.xs="start start" class="import-button">
+                            <button mat-raised-button class="btn-fix btn-search" (click)="btnUpload()">
+                                アップロード
+                            </button>
+                        </div>
+                    </div>
+
+                    <div fxLayout="row" fxFlex.gt-md="30" fxFlex.md="30" fxFlex.sm="45" fxFlex.xs="76"
+                        fxLayoutAlign="end start" fxLayoutGap="10px">
+                        <button mat-raised-button class="btn-fix btn-download" (click)="btnDownload()">
+                                ダウンロード
+                            </button>
+                        <button mat-raised-button class="btn-fix btn-download" style="font-size: 12px"
+                            (click)="openDialogTag()">
+                            追加
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <div class="table-container">
+        <p-table [value]="data" [scrollable]="true" [scrollHeight]="scrollH">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th width="5%">No</th>
+                    <th width="5%" class="hide-smaller-1024" pSortableColumn="id_tag" rowspan="2">
+                        タグID
+                        <p-sortIcon field="id_tag"></p-sortIcon>
+                    </th>
+                    <th class="hide-smaller-1024" width="35%" pSortableColumn="tag_name" rowspan="2">
+                        親タグ名
+                        <p-sortIcon field="tag_name"></p-sortIcon>
+                    </th>
+                    <th width="5%" class="hide-smaller-1024" rowspan="2">
+                        タグID
+                        <!-- <p-sortIcon field="id_tag"></p-sortIcon> -->
+                    </th>
+                    <th class="hide-smaller-1024" width="40%"  rowspan="2">
+                        子タグ名
+                        <!-- <p-sortIcon field="arr_child"></p-sortIcon> -->
+                    </th>
+                    <th class="hide-smaller-1024" width="10%" rowspan="2">
+                        削除
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
+                <tr class="each-row">
+                    <td class="text-center hide-smaller-1024" width="5.1%"
+                        style="border: 2px solid #c8c8c8 !important; border-style: none none solid solid !important;">{{ i + 1 }}</td>
+                    <td class="text-center hide-smaller-1024" width="5%"
+                        style="border-bottom: 2px solid #c8c8c8 !important; ">
+                            {{ data.id_tag }}
+                        <!-- <a class="hide-smaller-1024" title="{{ data.id_tag }}" (click)="openDialogTag(data, 'update')"
+                            style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                        <a class="show-smaller-1024" (click)="openDialogTag(data, 'update')" style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a> -->
+                    </td>
+                    <td class="hide-smaller-1024" width="35%"
+                        style="border: 2px solid #c8c8c8 !important; border-style: none none solid none !important;">
+                        <!--Tag-->
+                        <a (click)="openDialogTag(data.id_tag.toString(), 'update')"> {{ data.tag_name }} </a>
+                    </td>
+                    <!-- <div class="hide-smaller-1024"
+                        style="display: table-cell; width: 5%; border: 1px solid #c8c8c8;">
+                        <td class="text-center hide-smaller-1024" *ngFor="let item of data.arr_child"
+                         style="padding:15px; border: 1px solid #c8c8c8;">
+                            {{ item.split('-')[0] }}
+                        </td>
+                        <td class="text-center hide-smaller-1024"
+                            style="border: 1px solid #c8c8c8; padding: 15px; display:block" *ngIf="item.split('-')[0] ===''">
+                            {{ item.split('-')[0] }}
+                        </td>
+                    </div> -->
+                    <div class="hide-smaller-1024" *ngFor="let item of data.arr_child" >
+                        <td class="text-center hide-smaller-1024"
+                            style="padding:15px; border: 1px solid #c8c8c8; width: 93px;">
+                                {{ item.split('-')[0] }}
+                        </td>
+                        <td class="hide-smaller-1024 child-tag" style="padding:15px; border: 1px solid #c8c8c8; width: 89%;">
+                            <!--Child Tags-->
+                            <a class="hide-smaller-1024" title="{{ item }}" (click)="openDialogTag(item.split('-')[0], 'update')"
+                                style="color:#337ab7" *ngIf="item !== '-'">
+                                {{ item.split('-')[1] }}
+                            </a>
+                            <!-- <a class="show-smaller-1024" (click)="openDialogTag(item.split('-')[0], 'update')"
+                                                                                                    style="color:#337ab7" *ngIf="item !== '-'">
+                                                                                                    {{ item }}
+                                                                                                </a> -->
+                            <span class="hide-smaller-1024" *ngIf="item === '-'">{{ item }}</span>
+                        </td>
+                    </div>
+
+                    <!-- <hr style="border: black 1px solid; margin:0"/> -->
+
+
+                    <td class="text-center hide-smaller-1024" width="10%"
+                        style="border: 2px solid #c8c8c8 !important; border-style: none none solid none !important;">
+                        <button (click)="deleteTag(data.id_tag, data.tag_name)" class="btn btn-danger"
+                            style="width: 75px; color: white">
+                            削除
+                        </button>
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td class="text-center show-smaller-1024 hide-smaller-600" width="20%">{{ i + 1 }}</td>
+                    <!-- <td class="text-center show-smaller-1024 hide-smaller-600" width="370px" title="{{ data.id_tag }}">
+                        <a class="hide-smaller-1024" title="{{ data.id_tag }}" (click)="openDialogTag(data, 'update')"
+                            style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                        <a class="show-smaller-1024" (click)="openDialogTag(data, 'update')" style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                    </td> -->
+                    <td class="text-center show-smaller-600 hide-smaller-375" width="20%">{{ i + 1 }}</td>
+                    <!-- <td class="text-center show-smaller-600 hide-smaller-375" width="189px" title="{{ data.id_tag }}">
+                        <a class="hide-smaller-1024" title="{{ data.id_tag }}" (click)="openDialogTag(data, 'update')"
+                            style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                        <a class="show-smaller-1024" (click)="openDialogTag(data, 'update')" style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                    </td> -->
+                    <td class="text-center show-smaller-375" width="20%">{{ i + 1 }}</td>
+                    <!-- <td class="text-center show-smaller-375" width="170px" title="{{ data.id_tag }}">
+                        <a class="hide-smaller-1024" title="{{ data.id_tag }}" (click)="openDialogTag(data, 'update')"
+                            style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                        <a class="show-smaller-1024" (click)="openDialogTag(data, 'update')" style="color:#337ab7">
+                            {{ data.id_tag }}
+                        </a>
+                    </td> -->
+                </tr>
+
+                <tr class="show-smaller-1024">
+                    <td>親タグ名</td>
+                    <td>
+                        <a class="show-smaller-1024" (click)="openDialogTag(data.id_tag.toString(), 'update')"
+                            style="color:#337ab7" >
+                            {{ data.tag_name }}
+                        </a>
+                    </td>
+                    <td colspan="5">
+                        <a class="show-smaller-1024" (click)="openDialogTag(data.id_tag.toString(), 'update')"
+                            style="color:#337ab7" >
+                            {{ data.tag_name }}
+                        </a>
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024" *ngFor="let item of data.arr_child">
+                    <!--Child tags-->
+                    <td>子タグ名</td>
+                    <td>
+                        <a class="show-smaller-1024" (click)="openDialogTag(item.split('-')[0], 'update')"
+                            style="color:#337ab7" *ngIf="item !== '-'">
+                            {{ item }}
+                        </a>
+                        <span *ngIf="item === '-'">{{ item }}</span>
+                    </td>
+                    <td colspan="5">
+                        <a class="show-smaller-1024" (click)="openDialogTag(item.split('-')[0], 'update')"
+                            style="color:#337ab7" *ngIf="item !== '-'">
+                            {{ item }}
+                        </a>
+                        <span *ngIf="item === '-'">{{ item }}</span>
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td>削除</td>
+                    <td class="text-center">
+                        <button (click)="deleteTag(data.id_tag, data.tag_name)" class="btn btn-danger"
+                            style="width: 75px; color: white">
+                            削除
+                        </button>
+                    </td>
+                    <td colspan="5" class="text-center">
+                        <button (click)="deleteTag(data.id_tag, data.tag_name)" class="btn btn-danger"
+                            style="width: 75px; color: white">
+                            削除
+                        </button>
+                    </td>
+                </tr>
+
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+<app-back2top [totalRowInTable]="data.length" [rowToShowButton]="20"></app-back2top>

@@ -1,0 +1,74 @@
+@media screen and (min-width: 1024px) {
+    .show-smaller-1024 td:nth-child(3),
+    .show-smaller-1024 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .hide-smaller-1024 {
+        display: none;
+    }
+}
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: black;
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: black !important;
+}
+
+.configmail {
+    display: flex;
+    //justify-content: center;
+    margin-left: 5%;
+}
+
+.configmail1 {
+    display: flex;
+    //justify-content: center;
+    margin-left: 5%;
+}
+
+.rad {
+    margin-left: 20px;
+    font-weight: normal;
+}
+
+.th-lable-text {
+    font-size: 16px;
+}
+
+.border-table-1 {
+    border: 0.5px solid lightgray;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.margin-table-1 {
+    margin-left: 150px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+}
+
+.body-margin-1 {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+@media screen and (max-width: 1024px) {
+    .body-margin-1 {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+    .margin-table-1 {
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-bottom: 10px;
+    }
+}
+
+.border {
+    text-align: center;
+}

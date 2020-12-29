@@ -1,0 +1,84 @@
+<div class="event-body">
+    <div class="e-subject">
+        <mat-form-field>
+            <input matInput [(ngModel)]="calendar_event.subject" placeholder="Subject" />
+        </mat-form-field>
+    </div>
+    <div class="e-invite-attendees">
+        <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipList2 aria-label="Attendee selection">
+                <mat-chip *ngFor="let attendee of attendees" [selectable]="selectable" [removable]="removable" (removed)="removeAttendee(attendee)">
+                    {{ attendee }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New attendee..." #attendeeInput [formControl]="attendeeCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipList2" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addAttendee($event)" />
+            </mat-chip-list>
+            <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event, 'attendee')">
+                <mat-option *ngFor="let attendee of filteredAttendees | async" [value]="attendee">
+                    {{ attendee }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="e-date-time">
+        <div class="start">
+            <mat-form-field class="input-date">
+                <input matInput [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Start Date" [(ngModel)]="calendar_event.start_date" />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="input-time">
+                <input matInput type="text" placeholder="Pick one" aria-label="Number" #startTimeInput [formControl]="startTimeCtrl" [matAutocomplete]="auto3" />
+                <mat-autocomplete #auto3="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsStart | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="end">
+            <mat-form-field class="input-date">
+                <input matInput [matDatepicker]="picker2" (focus)="picker2.open()" placeholder="End Date" [(ngModel)]="calendar_event.end_date" />
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="input-time">
+                <input matInput type="text" placeholder="Pick one" aria-label="Number" #endTimeInput [formControl]="endTimeCtrl" [matAutocomplete]="auto4" />
+                <mat-autocomplete #auto4="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptionsEnd | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
+    <!-- <div class="e-repeat"></div> -->
+    <div class="e-location">
+        <mat-form-field class="example-chip-list">
+            <mat-chip-list #chipList aria-label="Location selection">
+                <mat-chip *ngFor="let location of locations" [selectable]="selectable" [removable]="removable" (removed)="removeLocation(location)">
+                    {{ location }}
+                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New location..." #locationInput [formControl]="locationCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addLocation($event)" />
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event, 'location')">
+                <mat-option *ngFor="let location of filteredLocations | async" [value]="location">
+                    {{ location }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <!-- <div class="e-reminder"></div> -->
+    <div class="e-content">
+        <mat-form-field class="example-full-width">
+            <textarea matInput [(ngModel)]="calendar_event.content" rows="5" placeholder="Leave a comment"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+<div class="event-buttons">
+    <button mat-button (click)="save()">Save</button>
+    <button mat-button (click)="discardEvent()">Discard</button>
+</div>

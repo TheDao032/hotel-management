@@ -1,0 +1,122 @@
+$menu-height: 45px;
+
+.nav-container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+
+    .nav-sidenav {
+        display: flex;
+        width: 240px;
+        // background: #00C853;
+        position: fixed;
+        top: 0px;
+        bottom: 0px;
+
+        mat-nav-list {
+            width: 100%;
+
+            a {
+                padding-left: 8px;
+
+                &.active {
+                    background-color: #ddd;
+                }
+
+                span {
+                    padding-left: 12px;
+                }
+            }
+
+            .sub-menu-item {
+                min-width: 150px;
+
+                &.active {
+                    background-color: #ddd;
+                }
+
+                a {
+                    color: black;
+                }
+            }
+        }
+    }
+
+    .nav-content {
+        height: 100vh;
+        width: 100vw;
+        user-select: text;
+        //background-color: #ddd;
+
+        .header {
+            width: 100vw;
+
+            .row-1 {
+                height: 56px;
+
+                #title {
+                    flex: 1 1 auto;
+                    align-self: center;
+                    text-align: center;
+                }
+
+                .icon-cover {
+                    align-self: center;
+                }
+            }
+        }
+    }
+}
+
+// Giang updated
+.padding-left-submenu {
+    padding-left: 3.5rem;
+}
+
+//Update By TheDao
+.padding-left-submenu_2 {
+    padding-left: 5rem;
+}
+
+.footer {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    justify-content: center;
+    text-align: center;
+    //background-color: #ddd;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+}
+
+@media screen and (max-width: 599px) {
+    // Tren dien thoai, tru them 56px vi thanh dia chi tren trinh duyet che mat man hinh ~56px
+    .app-content {
+        height: calc(100vh - 96px - 56px);
+        padding: 16px;
+        width: 100vw;
+        overflow: auto;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    // Tren dien thoai xoay ngang thi tru them 4px de table ko bi dinh vao footer
+    .app-content {
+        height: calc(100vh - 104px);
+        padding: 16px;
+        width: 100vw;
+        overflow: auto;
+    }
+}
+
+@media screen and (min-width: 960px) {
+    .app-content {
+        padding: 16px;
+        height: calc(100vh - 104px);
+        width: 100vw;
+        overflow: auto;
+    }
+}

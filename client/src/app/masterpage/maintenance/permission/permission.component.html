@@ -1,0 +1,196 @@
+<div style="margin-bottom: 10px">
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="true">
+            <mat-expansion-panel-header class="custom">
+            </mat-expansion-panel-header>
+
+            <div
+                fxLayout="row wrap"
+                fxLayoutAlign="space-between start"
+                style="margin-bottom: 20px"
+            >
+                <div
+                    fxLayout="row"
+                    fxFlex.gt-sm="25"
+                    fxFlex.sm="30"
+                    fxFlex.xs="100"
+                >
+                    <mat-form-field>
+                        <input
+                            matInput
+                            name="shain_cd"
+                            list="shainCdDataList"
+                            [(ngModel)]="searchForm.shain_cd"
+                            placeholder="社員番号"
+                        />
+                    </mat-form-field>
+
+                    <datalist id="shainCdDataList">
+                        <option
+                            *ngFor="let item of shainList"
+                            [value]="item.shain_cd"
+                            >{{ item.shain_mei }}
+                        </option>
+                    </datalist>
+                </div>
+
+                <div
+                    fxLayout="row"
+                    fxFlex.gt-sm="25"
+                    fxFlex.sm="30"
+                    fxFlex.xs="100"
+                >
+                    <mat-form-field>
+                        <mat-select
+                            matInput
+                            name="permission"
+                            [(ngModel)]="searchForm.permission_cd"
+                            placeholder="権限"
+                        >
+                            <mat-option value="">すべて</mat-option>
+                            <mat-option
+                                *ngFor="let permission of permissionList"
+                                [value]="permission"
+                            >
+                                {{ permission }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div
+                    fxLayout="row"
+                    fxFlex.gt-sm="25"
+                    fxFlex.sm="30"
+                    fxFlex.xs="100"
+                    fxLayoutAlign.gt-xs="space-between start"
+                    fxLayoutAlign.xs="start start"
+                    fxLayoutGap.xs="15px"
+                    fxLayoutGap.gt-xs="0px"
+                >
+                    <button
+                        mat-raised-button
+                        class="btn-fix btn-search"
+                        (click)="filterGridview()"
+                    >
+                        検索
+                    </button>
+                    <button
+                        mat-raised-button
+                        class="btn-fix btn-download"
+                        (click)="openDialog(true)"
+                    >
+                        追加
+                    </button>
+                </div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+
+<div class="table-cover">
+    <p-table [value]="gridViewData" [scrollable]="true" scrollHeight="100%">
+        <ng-template pTemplate="header">
+            <tr>
+                <th width="40px">No</th>
+                <th width="100px" pSortableColumn="shain_cd">
+                    社員番号
+                    <p-sortIcon field="shain_cd"></p-sortIcon>
+                </th>
+                <th width="120px" pSortableColumn="shain_mei">
+                    社員名
+                    <p-sortIcon field="shain_mei"></p-sortIcon>
+                </th>
+                <th
+                    class="th-toggle-header"
+                    width="70px"
+                    pSortableColumn="permission_cd"
+                >
+                    権限
+                    <p-sortIcon field="permission_cd"></p-sortIcon>
+                </th>
+                <th
+                    class="th-toggle-header"
+                    width="120px"
+                    pSortableColumn="start_date"
+                >
+                    適用開始日
+                    <p-sortIcon field="start_date"></p-sortIcon>
+                </th>
+                <th
+                    class="th-toggle-header"
+                    width="120px"
+                    pSortableColumn="end_date"
+                >
+                    適用終了日
+                    <p-sortIcon field="end_date"></p-sortIcon>
+                </th>
+                <th class="th-toggle-header" width="100px">削除</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-data let-i="rowIndex">
+            <tr class="each-shain-row">
+                <td
+                    width="40px"
+                    style="color: blue; cursor: pointer;"
+                    class="text-center"
+                    (click)="openDialog(false, data)"
+                >
+                    {{ i + 1 }}
+                </td>
+                <td width="100px" class="text-center">{{ data.shain_cd }}</td>
+                <td width="120px">{{ data.shain_mei }}</td>
+                <td width="70px" class="text-center td-hide-under-700">
+                    {{ data.permission_cd }}
+                </td>
+                <td width="120px" class="text-center td-hide-under-700">
+                    {{ data.start_date | date: 'yyyy/MM/dd' }}
+                </td>
+                <td width="120px" class="text-center td-hide-under-700">
+                    {{ data.end_date | date: 'yyyy/MM/dd' }}
+                </td>
+                <td width="100px" class="text-center td-hide-under-700">
+                    <a
+                        type="button"
+                        (click)="deletePermission(data)"
+                        data-toggle="modal"
+                        data-target="#confirmDelete"
+                        class="btn btn-danger"
+                        style="width: 75px; color: white"
+                    >
+                        削除
+                    </a>
+                </td>
+            </tr>
+            <tr class="tr-show-under-700">
+                <td colspan="2">権限</td>
+                <td>{{ data.permission_cd }}</td>
+            </tr>
+            <tr class="tr-show-under-700">
+                <td colspan="2">適用開始日</td>
+                <td>{{ data.start_date | date: 'yyyy/MM/dd' }}</td>
+            </tr>
+            <tr class="tr-show-under-700">
+                <td colspan="2">適用終了日</td>
+                <td>{{ data.end_date | date: 'yyyy/MM/dd' }}</td>
+            </tr>
+            <tr class="tr-show-under-700">
+                <td colspan="2">削除</td>
+                <td>
+                    <a
+                        type="button"
+                        (click)="deletePermission(data)"
+                        data-toggle="modal"
+                        data-target="#confirmDelete"
+                        class="btn btn-danger"
+                        style="width: 75px; color: white"
+                    >
+                        削除
+                    </a>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<app-back2top></app-back2top>

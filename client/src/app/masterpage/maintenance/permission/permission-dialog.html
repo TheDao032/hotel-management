@@ -1,0 +1,103 @@
+<h2 mat-dialog-title>{{ isCreate ? '追加' : '更新' }}</h2>
+
+<mat-dialog-content class="mat-typography">
+    <div fxLayout="column">
+        <div>
+            <mat-form-field>
+                <input
+                    matInput
+                    name="shain_cd"
+                    list="shainCdDataList"
+                    (change)="getShainMei()"
+                    [(ngModel)]="childData.shain_cd"
+                    placeholder="社員番号"
+                    [readonly]="!parentData.isCreate"
+                />
+            </mat-form-field>
+
+            <datalist id="shainCdDataList" *ngIf="isCreate">
+                <option *ngFor="let item of shainList" [value]="item.shain_cd"
+                    >{{ item.shain_mei }}
+                </option>
+            </datalist>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <input
+                    matInput
+                    [(ngModel)]="childData.shain_mei"
+                    placeholder="社員名"
+                    [readonly]="true"
+                />
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field>
+                <mat-select
+                    matInput
+                    name="permission"
+                    [(ngModel)]="childData.permission_cd"
+                    placeholder="権限"
+                >
+                    <mat-option
+                        *ngFor="let permission of permissionList"
+                        [value]="permission"
+                    >
+                        {{ permission }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="input-date">
+                <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    (focus)="picker1.open()"
+                    placeholder="適用開始日"
+                    [(ngModel)]="childData.start_date"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="input-date">
+                <input
+                    matInput
+                    [matDatepicker]="picker2"
+                    (focus)="picker2.open()"
+                    placeholder="適用終了日"
+                    [(ngModel)]="childData.end_date"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <p *ngIf="errorMessage" style="color: red">{{ errorMessage }}</p>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button
+        mat-raised-button
+        class="btn-fix btn-search"
+        style="width: 100px"
+        (click)="addOrUpdatePermission()"
+    >
+        保存
+    </button>
+</mat-dialog-actions>

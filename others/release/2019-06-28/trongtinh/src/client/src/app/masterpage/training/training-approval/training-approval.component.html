@@ -1,0 +1,578 @@
+<div fxLayout="column" fxFlex="100" fxLayoutGap="16px">
+    <mat-expansion-panel
+        #sf
+        (afterCollapse)="setHeight()"
+        (afterExpand)="setHeight()"
+        [expanded]="true"
+    >
+        <mat-expansion-panel-header class="custom">
+        </mat-expansion-panel-header>
+        <div id="filter">
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select [(value)]="searchParams.ki" placeholder="年度">
+                        <mat-option value="000">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let option of kiList"
+                            [value]="option.ki"
+                        >
+                            {{ option.year }} ({{ option.ki }}期)
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.honbu_cd"
+                        (change)="changeSoshiki()"
+                        placeholder="本部"
+                    >
+                        <mat-option value="">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let honbu of honbuList"
+                            [value]="honbu.honbu_cd"
+                        >
+                            {{ honbu.honbu_cd }} {{ honbu.honbu_nm }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.bumon_cd"
+                        (change)="changeSoshiki()"
+                        placeholder="部門"
+                    >
+                        <mat-option value="">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let bumon of bumonList"
+                            [value]="bumon.bumon_cd"
+                        >
+                            {{ bumon.bumon_cd }} {{ bumon.bumon_nm }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.group_cd"
+                        (change)="changeSoshiki()"
+                        placeholder="グループ"
+                    >
+                        <mat-option value="">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let group of groupList"
+                            [value]="group.group_cd"
+                        >
+                            {{ group.group_cd }} {{ group.group_nm }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.status"
+                        placeholder="ステータス"
+                    >
+                        <mat-option value="-1">すべて</mat-option>
+                        <ng-template
+                            ngFor
+                            let-item
+                            [ngForOf]="status.list"
+                            let-i="index"
+                        >
+                            <mat-option
+                                *ngIf="!item.hide"
+                                [disabled]="item.disabled"
+                                [value]="item.value"
+                            >
+                                {{ item.name }}
+                            </mat-option>
+                        </ng-template>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="研修名"
+                        name="kensyuu_mei"
+                        [(ngModel)]="searchParams.kensyuu_mei"
+                    />
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="社員名"
+                        name="shain_mei"
+                        [(ngModel)]="searchParams.shain_mei"
+                    />
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <input
+                        matInput
+                        placeholder="社員番号"
+                        name="shain_cd"
+                        [(ngModel)]="searchParams.shain_cd"
+                    />
+                </mat-form-field>
+            </div>
+
+            <div class="filter-item">
+                <mat-form-field>
+                    <input
+                        matInput
+                        [matDatepicker]="picker1"
+                        (focus)="picker1.open()"
+                        placeholder="開催日(FROM)"
+                        [(ngModel)]="searchParams.kensyuubi_from"
+                    />
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker1"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                        [touchUi]="mobileQuery.matches"
+                        #picker1
+                    ></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="filter-item">
+                <mat-form-field>
+                    <input
+                        matInput
+                        [matDatepicker]="picker2"
+                        (focus)="picker2.open()"
+                        placeholder="開催日(TO)"
+                        [(ngModel)]="searchParams.kensyuubi_to"
+                    />
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                        [touchUi]="mobileQuery.matches"
+                        #picker2
+                    ></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.tema_category"
+                        placeholder="テーマ"
+                    >
+                        <mat-option value="-1">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let option of tema_category"
+                            [value]="option.tema_category"
+                        >
+                            {{ option.tema_category }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="filter-item">
+                <mat-form-field>
+                    <mat-select
+                        [(value)]="searchParams.shukankikan"
+                        placeholder="主管組織"
+                    >
+                        <mat-option value="-1">すべて</mat-option>
+                        <mat-option
+                            *ngFor="let shukankikan of shukankikanList"
+                            [value]="shukankikan"
+                        >
+                            {{ shukankikan }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="submit">
+                <div class="submit-1">
+                    <div style="flex: 0.25; max-width: 120px">
+                        <button
+                            mat-raised-button
+                            class="btn-search common-button"
+                            type="submit"
+                            (click)="onSearch()"
+                        >
+                            検索
+                        </button>
+                    </div>
+                    <div
+                        style="flex: 0.35; margin: 0 5px 0 5px; max-width: 120px"
+                    >
+                        <button
+                            mat-raised-button
+                            class="btn-clear common-button"
+                            (click)="formReset()"
+                        >
+                            クリア
+                        </button>
+                    </div>
+                    <div style="flex: 0.4; max-width: 120px">
+                        <button
+                            mat-raised-button
+                            class="btn-download common-button"
+                            (click)="download()"
+                        >
+                            ダウンロード
+                        </button>
+                    </div>
+                </div>
+                <div class="submit-1" style="margin-top: 5px">
+                    <div style="flex: 0.5; max-width: 120px">
+                        <button
+                            mat-raised-button
+                            class="btn-download common-button"
+                            (click)="downloadLeft()"
+                        >
+                            富士通
+                        </button>
+                    </div>
+                    <div style="flex: 0.5; margin: 0 0 0 5px; max-width: 120px">
+                        <button
+                            mat-raised-button
+                            class="btn-download common-button"
+                            (click)="downloadRight()"
+                        >
+                            ナレッジトラスト
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    <div class="table-container">
+        <p-table [value]="data" [scrollable]="true" [scrollHeight]="scrollH">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th width="45px">No</th>
+                    <th width="100px">保存</th>
+                    <th width="180px">ステータス</th>
+                    <th
+                        class="hide-smaller-600"
+                        width="110px"
+                        pSortableColumn="shain_cd"
+                    >
+                        社員番号
+                        <p-sortIcon field="shain_cd"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-600"
+                        width="130px"
+                        pSortableColumn="shain_mei"
+                    >
+                        社員名
+                        <p-sortIcon field="shain_mei"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-960"
+                        width="130px"
+                        pSortableColumn="shain_mei_kana"
+                    >
+                        カナ
+                        <p-sortIcon field="shain_mei_kana"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-960"
+                        width="110px"
+                        pSortableColumn="jyukouryou"
+                    >
+                        受講費用
+                        <p-sortIcon field="jyukouryou"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="120px"
+                        pSortableColumn="bumon_nm"
+                    >
+                        部門
+                        <p-sortIcon field="bumon_nm"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="100px"
+                        pSortableColumn="kensyuu_id"
+                    >
+                        研修ID
+                        <p-sortIcon field="kensyuu_id"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="200px"
+                        pSortableColumn="kensyuu_mei"
+                    >
+                        研修名
+                        <p-sortIcon field="kensyuu_mei"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="100px"
+                        pSortableColumn="nittei_from"
+                    >
+                        開催日
+                        <p-sortIcon field="nittei_from"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="150px"
+                        pSortableColumn="basho"
+                    >
+                        開催場所
+                        <p-sortIcon field="basho"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="150px"
+                        pSortableColumn="tema_category"
+                    >
+                        テーマ
+                        <p-sortIcon field="tema_category"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="170px"
+                        pSortableColumn="taishosha_level"
+                    >
+                        対象者
+                        <p-sortIcon field="taishosha_level"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="170px"
+                        pSortableColumn="shukankikan"
+                    >
+                        主管組織
+                        <p-sortIcon field="shukankikan"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="110px"
+                        pSortableColumn="moushikomikigen"
+                    >
+                        申込期限
+                        <p-sortIcon field="moushikomikigen"></p-sortIcon>
+                    </th>
+                    <th
+                        class="hide-smaller-1024"
+                        width="100px"
+                        pSortableColumn="cancel_date"
+                        matTooltip="キャンセル可能日"
+                        matTooltipPosition="above"
+                    >
+                        CXL
+                        <p-sortIcon field="cancel_date"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-data let-i="rowIndex">
+                <tr class="each-row">
+                    <td style="text-align: center" width="45px">{{ i + 1 }}</td>
+                    <td width="100px">
+                        <button
+                            [disabled]="data.originalStatus == data.status"
+                            class="btn btn-primary custom-btn-style"
+                            (click)="saveStatus(data)"
+                        >
+                            保存
+                        </button>
+                    </td>
+                    <td style="text-align: center" width="180px">
+                        <select class="form-control" [(ngModel)]="data.status">
+                            <!-- <option *ngFor="let stt of status.list" [value]="stt.value">
+                {{ stt.name }}
+              </option> -->
+                            <ng-template
+                                ngFor
+                                let-item
+                                [ngForOf]="status.list"
+                                let-i="index"
+                            >
+                                <option
+                                    *ngIf="item.value !== 12"
+                                    [value]="item.value"
+                                >
+                                    {{ item.name }}
+                                </option>
+                            </ng-template>
+                        </select>
+                    </td>
+                    <td class="hide-smaller-600 text-center" width="110px">
+                        {{ data.shain_cd }}
+                    </td>
+                    <td class="hide-smaller-600" width="130px">
+                        {{ data.shain_mei }}
+                    </td>
+                    <td class="hide-smaller-960 text-center" width="130px">
+                        {{ data.shain_mei_kana }}
+                    </td>
+                    <td class="hide-smaller-960 text-right" width="110px">
+                        {{ data.jyukouryou | currency: 'JPY':'symbol':'1.0-2' }}
+                    </td>
+                    <td class="hide-smaller-1024" width="120px">
+                        {{ data.bumon_nm }}
+                    </td>
+                    <td class="hide-smaller-1024 text-center" width="100px">
+                        {{ data.kensyuu_id }}
+                    </td>
+                    <td
+                        class="hide-smaller-1024"
+                        width="200px"
+                        title="{{ data.kensyuu_mei }}"
+                    >
+                        {{ data.kensyuu_mei | stringByteLimit }}
+                    </td>
+                    <td class="hide-smaller-1024 text-center" width="100px">
+                        {{ data.nittei_from | date: 'yyyy/MM/dd' }}
+                    </td>
+                    <td class="hide-smaller-1024" width="150px">
+                        {{ data.basho }}
+                    </td>
+                    <td
+                        class="hide-smaller-1024"
+                        width="150px"
+                        title="{{ data.tema_category }}"
+                    >
+                        {{ data.tema_category | stringByteLimit: 20 }}
+                    </td>
+                    <td
+                        class="hide-smaller-1024"
+                        width="170px"
+                        title="{{ data.taishosha_level }}"
+                    >
+                        {{ data.taishosha_level | stringByteLimit: 20 }}
+                    </td>
+                    <td
+                        class="hide-smaller-1024"
+                        width="170px"
+                        title="{{ data.shukankikan }}"
+                    >
+                        {{ data.shukankikan | stringByteLimit: 20 }}
+                    </td>
+                    <td class="hide-smaller-1024 text-center" width="110px">
+                        {{ data.moushikomikigen | date: 'yyyy/MM/dd' }}
+                    </td>
+                    <td class="hide-smaller-1024 text-center" width="100px">
+                        {{ data.cancel_date | date: 'yyyy/MM/dd' }}
+                    </td>
+                </tr>
+                <tr class="show-smaller-600">
+                    <td colspan="2">社員番号</td>
+                    <td>{{ data.shain_cd }}</td>
+                </tr>
+                <tr class="show-smaller-600">
+                    <td colspan="2">社員名</td>
+                    <td>{{ data.shain_mei }}</td>
+                </tr>
+                <tr class="show-smaller-960">
+                    <td colspan="2">カナ</td>
+                    <td>{{ data.shain_mei_kana }}</td>
+                    <td colspan="3">{{ data.shain_mei_kana }}</td>
+                </tr>
+                <tr class="show-smaller-960">
+                    <td colspan="2">受講費用</td>
+                    <td>
+                        {{ data.jyukouryou | currency: 'JPY':'symbol':'1.0-2' }}
+                    </td>
+                    <td colspan="3">
+                        {{ data.jyukouryou | currency: 'JPY':'symbol':'1.0-2' }}
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">部門</td>
+                    <td>{{ data.bumon_nm }}</td>
+                    <td colspan="3">{{ data.bumon_nm }}</td>
+                    <td colspan="5">{{ data.bumon_nm }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">研修ID</td>
+                    <td>{{ data.kensyuu_id }}</td>
+                    <td colspan="3">{{ data.kensyuu_id }}</td>
+                    <td colspan="5">{{ data.kensyuu_id }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">研修名</td>
+                    <td>{{ data.kensyuu_mei }}</td>
+                    <td colspan="3">{{ data.kensyuu_mei }}</td>
+                    <td colspan="5">{{ data.kensyuu_mei }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">開催日</td>
+                    <td>{{ data.nittei_from | date: 'yyyy/MM/dd' }}</td>
+                    <td colspan="3">
+                        {{ data.nittei_from | date: 'yyyy/MM/dd' }}
+                    </td>
+                    <td colspan="5">
+                        {{ data.nittei_from | date: 'yyyy/MM/dd' }}
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">開催場所</td>
+                    <td>{{ data.basho }}</td>
+                    <td colspan="3">{{ data.basho }}</td>
+                    <td colspan="5">{{ data.basho }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">テーマ</td>
+                    <td>{{ data.tema_category }}</td>
+                    <td colspan="3">{{ data.tema_category }}</td>
+                    <td colspan="5">{{ data.tema_category }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">対象者</td>
+                    <td>{{ data.taishosha_level }}</td>
+                    <td colspan="3">{{ data.taishosha_level }}</td>
+                    <td colspan="5">{{ data.taishosha_level }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">主管組織</td>
+                    <td>{{ data.shukankikan }}</td>
+                    <td colspan="3">{{ data.shukankikan }}</td>
+                    <td colspan="5">{{ data.shukankikan }}</td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">申込期限</td>
+                    <td>{{ data.moushikomikigen | date: 'yyyy/MM/dd' }}</td>
+                    <td colspan="3">
+                        {{ data.moushikomikigen | date: 'yyyy/MM/dd' }}
+                    </td>
+                    <td colspan="5">
+                        {{ data.moushikomikigen | date: 'yyyy/MM/dd' }}
+                    </td>
+                </tr>
+                <tr class="show-smaller-1024">
+                    <td colspan="2">CXL</td>
+                    <td>{{ data.cancel_date | date: 'yyyy/MM/dd' }}</td>
+                    <td colspan="3">
+                        {{ data.cancel_date | date: 'yyyy/MM/dd' }}
+                    </td>
+                    <td colspan="5">
+                        {{ data.cancel_date | date: 'yyyy/MM/dd' }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<app-back2top></app-back2top>

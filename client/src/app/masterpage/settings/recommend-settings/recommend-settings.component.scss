@@ -1,0 +1,97 @@
+.container {
+    max-height: 400px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+}
+
+.title {
+    padding: 10px;
+    background-color: #2962ff;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.header-title {
+    display: flex;
+    flex: 0.2;
+    padding: 5px;
+}
+
+.header-input-div {
+    display: flex;
+    flex: 0.8;
+    padding: 5px;
+}
+
+.header-input-input {
+    width: 100%;
+    padding: 5px;
+}
+
+.body {
+    display: flex;
+    flex-direction: row;
+}
+
+.body-left-parent {
+    display: flex;
+    flex-direction: column;
+    flex: 0.5;
+}
+
+.body-left-child {
+    padding: 5px;
+}
+
+.body-right-parent {
+    display: flex;
+    flex-direction: column;
+    flex: 0.5;
+}
+
+.body-right-child {
+    padding: 5px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer-checkbox-div {
+    display: flex;
+    flex: 0.2;
+    padding: 5px;
+}
+
+.footer-input-div {
+    display: flex;
+    flex: 0.8;
+    padding: 5px;
+}
+
+.footer-input-textarea {
+    width: 100%;
+    padding: 5px;
+    border-width: 2px;
+}
+
+.submit {
+    padding: 24px;
+    display: flex;
+    align-self: center;
+}

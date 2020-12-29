@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row" style="padding-bottom: 20px; padding-top: 80px;">
+        <!-- <div class="info">
+            <h1 style="position: relative; left: -33%">－ みんなのスキル向上・変革のプラットフォーム －</h1>
+        </div> -->
+        <div class="form">
+            <!-- logo -->
+            <!-- <div
+                class="thumbnail"
+                style="background-image: url('assets/images/cubelogo.png')"
+            >
+                <img src="assets/images/favicon.png" />
+            </div> -->
+            <!-- Form login -->
+            <form
+                class="login-form"
+                role="form"
+                #f="ngForm"
+                (ngSubmit)="login()"
+            >
+                <input
+                    name="user_id"
+                    [(ngModel)]="user.user_id"
+                    type="text"
+                    placeholder="ユーザーID"
+                    required
+                />
+                <input
+                    id="password"
+                    name="password"
+                    [(ngModel)]="user.password"
+                    type="password"
+                    placeholder="パスワード"
+                    required
+                />
+                <button type="submit" class="btn btn-login">ログイン</button>
+                <p class="message" *ngIf="message">{{ message }}</p>
+            </form>
+        </div>
+    </div>
+</div>

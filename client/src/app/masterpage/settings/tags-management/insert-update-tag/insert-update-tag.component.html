@@ -1,0 +1,67 @@
+<div class="wrap-content" fxLayout="column">
+    <h3 class="text-center">
+        <strong>{{header}}</strong>
+    </h3>
+    <div fxLayout="column" fxFlex.gt-sm="15" fxFlex.sm="15" fxFlex.xs="15" class="tag-input" *ngIf="parentData.type === 'update'">
+        <mat-form-field>
+                <input matInput placeholder="タグID" [(ngModel)]="parentData.input.id_tag" readonly >
+        </mat-form-field>
+        <!-- <span>タグID:</span>
+        <strong>{{ parentData.input.id_tag }}</strong> -->
+    </div>
+    <div fxLayout="column" fxFlex.gt-sm="15" fxFlex.sm="15" fxFlex.xs="15" class="tag-input">
+        <!-- <span>親タグ名</span> -->
+        <mat-form-field>
+                <!-- <input type="text" aria-label="Assignee" matInput placeholder="親タグ名" [formControl]="selectTagFormControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option (onSelectionChange)="selectionChange(option.id_tag)" *ngFor="let option of filteredOptions"
+                        [value]="option.tag_name">
+                        {{option.tag_name}}
+                    </mat-option>
+                </mat-autocomplete> -->
+            <input matInput placeholder="親タグ名" [formControl]="tagFormControl" *ngIf="hasChild && tagsList.length === 0">
+            <mat-select (openedChange)="openedChange($event)" placeholder="親タグ名" [formControl]="selectTagFormControl" *ngIf="hasChild && tagsList.length !== 0">
+                <div class="select-container">
+                    <mat-optgroup>
+                        <mat-form-field style="width:100%;">
+                            <input #search autocomplete="off" placeholder="" aria-label="Search" matInput
+                                [formControl]="searchTextboxControl">
+                            <button [disableRipple]="true" *ngIf="search.value" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="clearSearch($event)">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </mat-optgroup>
+                    <mat-optgroup *ngIf="filteredOptions.length == 0">
+                            <span>"{{newData.tag_name}}"のタグが存在していません。</span>
+                        <button mat-button class="btn-update" (click)="createNewOption()" *ngIf="parentData.type === 'create'">
+                            追加したいですか。</button>
+                    </mat-optgroup>
+                    <mat-option (onSelectionChange)="selectionChange($event)" *ngFor="let option of filteredOptions"
+                        [value]="option.id_tag">
+                        {{option.tag_name}}
+                    </mat-option>
+                </div>
+            </mat-select>
+            <input matInput placeholder="親タグ名" [formControl]="tagFormControl" *ngIf="!hasChild">
+        </mat-form-field>
+
+    </div>
+    <div fxLayout="column" fxFlex.gt-sm="50" fxFlex.sm="50" fxFlex.xs="50" class="tag-input" *ngIf="selectedValues">
+        <!-- <span>子タグ名</span> -->
+        <mat-form-field>
+            <input matInput placeholder="子タグ名" [(ngModel)]="childTag" />
+        </mat-form-field>
+    </div>
+
+</div>
+<div fxLayout="row" fxLayoutAlign="center" style="margin-bottom: 15px; margin-top:20px">
+        <button mat-raised-button class="btn-fix btn-update" (click)="createOrUpdate()">
+            {{buttonName}}
+        </button>
+
+        <button mat-raised-button class="btn-fix btn-danger" style="margin-left:20px; color: white; "
+            (click)="deleteTag(id_tag, childTag)" *ngIf="parentData.input.id_tag_father">
+                削除
+            </button>
+    </div>

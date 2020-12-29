@@ -1,0 +1,60 @@
+{
+    "name": "kensyuukanri",
+    "version": "1.0.0",
+    "private": true,
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "set NODE_ENV=production&&node app.js",
+        "test": "nodemon app.js"
+    },
+    "author": "Thanh An",
+    "license": "ISC",
+    "dependencies": {
+        "@microsoft/microsoft-graph-client": "^1.7.0",
+        "body-parser": "~1.18.2",
+        "cookie-parser": "^1.4.3",
+        "cors": "^2.8.4",
+        "dateformat": "^3.0.2",
+        "debug": "^4.1.1",
+        "errorhandler": "^1.5.0",
+        "exceljs": "^1.7.0",
+        "express": "^4.16.4",
+        "express-session": "^1.15.6",
+        "global": "^4.4.0",
+        "install": "^0.13.0",
+        "jsonwebtoken": "^8.2.0",
+        "ldapjs": "^1.0.2",
+        "log4js": "^3.0.6",
+        "method-override": "^3.0.0",
+        "moment": "^2.24.0",
+        "morgan": "~1.9.0",
+        "multer": "^1.3.0",
+        "nodemailer": "^6.4.1",
+        "oracledb": "^4.0.1",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "passport-local": "^1.0.0",
+        "pg": "^7.8.0",
+        "qrcode": "^1.3.3",
+        "simple-oauth2": "^2.2.1"
+    },
+    "devDependencies": {
+        "editorconfig": "^0.15.3",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-plugin-import": "^2.16.0",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-prettier": "^3.0.1",
+        "eslint-plugin-react": "^7.12.4",
+        "nodemon": "^1.19.1",
+        "prettier": "^1.16.4"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "public/*"
+        ],
+        "delay": "1000"
+    }
+}

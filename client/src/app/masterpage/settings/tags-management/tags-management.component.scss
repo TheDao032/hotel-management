@@ -1,0 +1,99 @@
+@import 'scss/grid.scss';
+.wrap-content {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 1220px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+#filter {
+    @include flex();
+    @include wrap();
+
+    .filter-item {
+        @media only screen and (max-width: 767px) {
+            @include split(2, 10px);
+        }
+
+        @media only screen and (min-width: 768px) {
+            @include split(5, 16px);
+        }
+
+        @media only screen and (min-width: 1920px) {
+            @include split(6, 16px);
+        }
+
+        &.submit {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        > mat-form-field {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+.tag-input {
+    width: 30%;
+}
+
+@media only screen and (max-width: 599px) {
+    .import-button {
+        margin: 20px 0px;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 960px) {
+    .import-file-div {
+        margin-bottom: 20px;
+    }
+}
+
+// RESPONSIVE TABLE
+@media only screen and (max-width: 599px) {
+    .each-row {
+        background-color: oldlace !important;
+    }
+    .show-smaller-375,
+    .hide-smaller-600,
+    .hide-smaller-1024,
+    .show-smaller-1024 td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1023px) {
+    .each-row {
+        background-color: oldlace !important;
+    }
+    .show-smaller-375,
+    .hide-smaller-1024,
+    .show-smaller-600,
+    .show-smaller-1024 td:nth-child(2) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .show-smaller-375,
+    .show-smaller-600,
+    .show-smaller-1024 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 375px) {
+
+    .hide-smaller-375 {
+        display: none;
+    }
+}
+
+a {
+    cursor: pointer;
+}

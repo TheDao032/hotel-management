@@ -1,0 +1,24 @@
+<div style="margin: 0% 20% 0% 20%">
+    <div class="border-table-1">
+        <table>
+            <tr style="height: 30px"></tr>
+            <tr>
+                <td style="width: 100px"></td>
+                <td style="width: 300px" class="th-lable-text">
+                    検索条件指定を保存する時間
+                </td>
+                <td>
+                    <mat-form-field style="width: 30px;margin: 0px 10px 0px 10px"> <input matInput style="width: 30px;" [(ngModel)]="this.time" /> </mat-form-field>分
+                </td>
+                <td style="width: 30px"></td>
+            </tr>
+            <tr style="height: 30px"></tr>
+        </table>
+    </div>
+    <div style="height: 30px"></div>
+    <div>
+        <button style="margin-left: 40%;margin-right:40% ;" mat-raised-button class="btn-fix btn-search" (click)="editTimeSearch()">
+            保存
+        </button>
+    </div>
+</div>

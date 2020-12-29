@@ -1,0 +1,34 @@
+<div class="container">
+
+    <div class="body">
+
+        <p-table [value]="arr_recommend">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id">
+                        レコメンドの優先順位
+                        <p-sortIcon field="id"></p-sortIcon>
+                    </th>
+                    <th>チェック</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-data>
+                <tr class="each-row">
+                    <td width="100px" class="text-center">
+                        {{data.column_name}}
+                    </td>
+                    <td width="100px" class="text-center">
+                        <mat-checkbox color="primary" (id)="data.column_id" [(ngModel)]="data.is_check">
+                        </mat-checkbox>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+
+    </div>
+    <div class="submit">
+        <button mat-button class="btn-update" (click)="saveRecommends()">保存</button>
+    </div>
+</div>

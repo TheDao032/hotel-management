@@ -1,0 +1,42 @@
+<div class="user-picture-box">
+
+</div>
+<img  src="{{imgUrl}}">
+<div *ngIf="!accessToken">
+    <a mat-button href="{{ signInUrl }}">Sign In to Outlook</a>
+</div>
+<div *ngIf="accessToken">
+    <h2>Calendar</h2>
+    <button mat-button (click)="signOut()">Sign Out from Outlook</button>
+    <table class="table">
+        <thead class="thead-light">
+            <th scope="col">Subject</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Content</th>
+            <th scope="col">Attendees</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of calendar_list">
+                <td>
+                    <a style="cursor: pointer" (click)="selectedEvent = item; openDialog(false)">{{ item.subject }}</a>
+                </td>
+                <td>{{ item.start.dateTime | date: 'medium' }} ({{ item.start.timeZone }})</td>
+                <td>{{ item.end.dateTime | date: 'medium' }} ({{ item.end.timeZone }})</td>
+                <td>{{ item.bodyPreview }}</td>
+                <td>
+                    <ul class="list-unstyled">
+                        <li class="border p-1" *ngFor="let emailItem of item.attendees" title="{{ emailItem.emailAddress.address }}">
+                            {{ emailItem.emailAddress.name }}
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <button mat-button (click)="openDialog()">Event Detail</button>
+    </div>
+</div>
+
+<div #fullcalendar></div>

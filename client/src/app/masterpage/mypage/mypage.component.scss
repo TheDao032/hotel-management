@@ -1,0 +1,109 @@
+@import 'scss/grid.scss';
+
+.tsuuchi {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    .tsuuchi-title {
+        padding: 5px 10px;
+        font-size: 12px;
+        font-weight: bolder;
+        color: #0840e9;
+        text-decoration: underline;
+    }
+
+    .tsuuchi-list {
+        color: #333;
+        overflow-y: scroll;
+        height: 120px;
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .category {
+        font-weight: 600;
+        display: inline-block;
+        padding-right: 15px;
+        min-width: 100px;
+        text-align: right;
+    }
+}
+
+#filter {
+    @include flex();
+    @include wrap();
+
+    .filter-item {
+        @media only screen and (max-width: 767px) {
+            @include split(2, 10px);
+        }
+
+        @media only screen and (min-width: 768px) {
+            @include split(3, 16px);
+        }
+
+        @media only screen and (min-width: 1920px) {
+            @include split(4, 16px);
+        }
+
+        &.submit {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        > mat-form-field {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+// RESPONSIVE TABLE
+@media only screen and (max-width: 599px) {
+    .each-row {
+        background-color: oldlace !important;
+    }
+
+    .hide-smaller-600,
+    .hide-smaller-960,
+    .hide-smaller-1024,
+    .show-smaller-960 td:nth-child(3),
+    .show-smaller-1024 td:nth-child(3),
+    .show-smaller-1024 td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .each-row {
+        background-color: oldlace !important;
+    }
+
+    .hide-smaller-960,
+    .hide-smaller-1024,
+    .show-smaller-600,
+    .show-smaller-960 td:nth-child(2),
+    .show-smaller-1024 td:nth-child(2),
+    .show-smaller-1024 td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1023px) {
+    .hide-smaller-1024,
+    .show-smaller-600,
+    .show-smaller-960,
+    .show-smaller-1024 td:nth-child(2),
+    .show-smaller-1024 td:nth-child(3) {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .show-smaller-600,
+    .show-smaller-960,
+    .show-smaller-1024 {
+        display: none;
+    }
+}

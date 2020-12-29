@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Discard event</h2>
+
+<mat-dialog-content class="mat-typography">
+    <pre style="white-space: pre-wrap">{{ data.discardMessage }}</pre>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button
+        mat-raised-button
+        [mat-dialog-close]="!data.answer"
+        class="btn-accept"
+    >
+        はい
+    </button>
+    <button mat-raised-button mat-dialog-close >
+        いいえ
+    </button>
+</mat-dialog-actions>
