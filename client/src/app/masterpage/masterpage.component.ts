@@ -6,6 +6,7 @@ import * as Hammer from 'hammerjs'
 import { AuthService } from '@app/auth/auth.service'
 import { environment } from '../../environments/environment'
 import { HttpClient } from '@angular/common/http'
+import { SharedService } from './../shared/shared.service'
 
 export interface Submenu {
     id: number
@@ -24,6 +25,7 @@ export interface Submenu {
 //Update By TheDao
 export class MasterpageComponent implements OnInit {
     mobileQuery: MediaQueryList
+    sharedService: SharedService
     @ViewChild('sidenav', { static: true }) sidenav: MatSidenav
     title: String = 'this is title'
     username: String = 'username'

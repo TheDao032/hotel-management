@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
 import { MasterpageComponent } from './masterpage.component'
-import { MypageComponent } from '../masterpage/mypage/mypage.component'
+import { homePageComponent } from './homepage/homepage.component'
 import { PermissionComponent } from './maintenance/permission/permission.component'
 import { MailSettingsComponent } from './settings/mail-settings/mail-settings.component'
 
@@ -34,7 +34,7 @@ const routes: Routes = [
             },
             {
                 path: 'home',
-                component: MypageComponent,
+                component: homePageComponent,
             },
             {
                 path: 'settings',

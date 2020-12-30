@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TagsService } from '@app/masterpage/training/training-info/tags/tags.service';
 import { AuthService } from '@app/auth/auth.service';
 import { SharedService } from '@app/shared/shared.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatSnackBar } from '@angular/material';
@@ -42,7 +41,6 @@ export class InsertUpdateTagComponent implements OnInit {
     constructor(
         private sharedSevice: SharedService,
         private auth: AuthService,
-        private tagsService: TagsService,
         private dialog: MatDialog,
         public snackBar: MatSnackBar,
         public selfDialog: MatDialogRef<InsertUpdateTagComponent>,
@@ -77,17 +75,8 @@ export class InsertUpdateTagComponent implements OnInit {
                 this.tagFormControl.patchValue(this.parentData.input.tag_name)
             }
         }
-        this.getAllTag();
     }
 
-    getAllTag() {
-        this.tagsService.getAllTag().subscribe((res) => {
-            this.tagsList = res.data
-            this.filteredOptions = this.tagsList
-            // this.allTag = res.data2
-            this.allTag = res.data5
-        })
-    }
 
     /**
        * Used to filter data based on search input
@@ -193,60 +182,6 @@ export class InsertUpdateTagComponent implements OnInit {
         // console.log(newState)
     }
 
-    createOrUpdate()  {
-
-        // this.tagsService.getAllTag().subscribe((res) => {
-        //     this.tagsList = res.data
-        //     this.allTag = res.data5
-
-        // })
-        if (this.childTag) {
-            this.newChildData.tag_name = this.childTag
-            const maxId = this.allTag.length > 0 ? Math.max.apply(Math, this.allTag.map((o) => { return o.id_tag; })) : this.allTag.length
-            this.newChildData.id_tag = maxId + 1
-            const findId = this.tagsList.find((e) => {
-                return e.id_tag === this.selectedValues
-            })
-            if (findId) {
-                this.newChildData.id_tag_father = findId.id_tag
-            }
-            // const findName = this.allTag.find((e) => {
-            //     return e.tag_name.toLowerCase() === this.childTag.toLowerCase()
-            // })
-            // if(findName) {
-            //     this.newChildData.id_tag = findName.id_tag
-            //     this.newChildData.tag_name = findName.tag_name
-            // }
-            if (this.parentData.type === 'update') {
-                this.newChildData.id_tag = this.parentData.input.id_tag
-            }
-        }
-
-        if (this.tagFormControl.value) {
-            this.newChildData.id_tag = this.parentData.input.id_tag
-            if(this.allTag.length === 0) {
-                this.newChildData.id_tag = 1
-            }
-            if(this.tagsList.length === 0) {
-                const maxId = this.allTag.length > 0 ? Math.max.apply(Math, this.allTag.map((o) => { return o.id_tag; })) : this.allTag.length
-                this.newChildData.id_tag = maxId + 1
-            }
-            this.newChildData.tag_name = this.tagFormControl.value
-        }
-
-        this.tagsService.insertOrUpdateTag(this.newData, this.newChildData, this.parentData.type, this.shain_cd).subscribe((res) => {
-                this.selfDialog.close({
-                    type: this.parentData.type,
-                    success: true,
-            }),
-            (err) =>
-                this.selfDialog.close({
-                    type: this.parentData.type,
-                    success: false,
-                })
-        })
-    }
-
     deleteTag(id, name) {
         // console.log(input)
         const dialogRef = this.dialog.open(ConfirmDeleteTagDialogComponent, {
@@ -268,7 +203,6 @@ export class InsertUpdateTagComponent implements OnInit {
                 this.snackBar.open('削除に失敗しました。')
             }
             setTimeout(() => this.snackBar.dismiss(), 3000)
-            this.getAllTag()
         })
     }
 

@@ -1,0 +1,22 @@
+@import 'scss/color.scss';
+
+.rating {
+    position: relative;
+
+    .material-icons {
+        color: $star-bg;
+        // font-size: 32px;
+    }
+
+    .rating-star {
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+
+        .material-icons {
+            color: $star;
+        }
+    }
+}
