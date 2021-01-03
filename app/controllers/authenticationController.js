@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require('express')
 
 const router = express.Router()
@@ -9,26 +10,13 @@ const environments = require('../environments/environment')
 
 router.post('/login', (req, res) => {
     authenticationService.authenticate(req.body.username, req.body.password, (err, auth = null, user = null) => {
-        // console.log(err)
         if (err) {
-            console.log(err)
-            // const path = require('path')
-            // const fs = require('fs')
-            //       const content = typeof(err) === 'string' && err || JSON.stringify(err)
-            //       const text =
-            // `****
-            //   username: ${req.body.username}
-            //   ${content}
-            // ****
-            // `
-            //       fs.appendFile(path.join(__dirname, `../logs/login.txt`), text, {encoding: 'utf8'}, _ => {})
             res.status(401).json({
                 err,
                 code: 6,
             })
             return
         }
-        console.log(auth)
         const token = jwt.sign(auth, environments.secret, {
             expiresIn: '24h',
             algorithm: 'HS256',
@@ -44,15 +32,15 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/verify-token', authentication.verifyToken, (req, res) => {
-    const { shain_cd, permission_cd } = req.user
+    const { employee_id, permission_cd } = req.user
     authenticationService
-        .getShainName(shain_cd)
+        .getEmployeeName(employee_id)
         .then((fullname) => {
             return res.json({
                 code: 0,
                 data: {
                     user: {
-                        shain_cd,
+                        employee_id,
                         permission_cd,
                         fullname,
                     },

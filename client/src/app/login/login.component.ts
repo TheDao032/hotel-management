@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { AuthService } from '@app/auth/auth.service'
 import * as common from '@app/common'
+import { FormsModule } from '@angular/forms'
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
     // user_password: String
     message
     user: any = {
-        user_id: '',
+        user_name: '',
         password: '',
     }
     constructor(private router: Router, private authenticationService: AuthService) {}
@@ -28,17 +29,15 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        if (this.user.user_id === '') {
-            this.message = common.message.W010({ param: 'ユーザーID' })
-            // this.message = 'ユーザーID 項目を入力してください。'
+        if (this.user.user_name === '') {
+            this.message = common.message.W010({ param: 'employee_id' })
             return
         }
         if (this.user.password === '') {
-            this.message = common.message.W010({ param: 'パスワード' })
-            // this.message = 'パスワード 項目を入力してください。'
+            this.message = common.message.W010({ param: 'password' })
             return
         }
-        this.authenticationService.login(this.user.user_id, this.user.password).subscribe(
+        this.authenticationService.login(this.user.user_name, this.user.password).subscribe(
             (result) => {
                 if (result) {
                     this.message = ''

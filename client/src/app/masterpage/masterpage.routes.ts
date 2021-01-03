@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router'
 
 import { MasterpageComponent } from './masterpage.component'
 import { homePageComponent } from './homepage/homepage.component'
-import { PermissionComponent } from './maintenance/permission/permission.component'
 import { MailSettingsComponent } from './settings/mail-settings/mail-settings.component'
 
 // Auth route
@@ -84,16 +83,6 @@ const routes: Routes = [
                     {
                         path: 'tag-management',
                         component: TagsManagementComponent,
-                    },
-                ],
-            },
-            {
-                path: 'maintenance',
-                canActivate: [AdminGuard],
-                children: [
-                    {
-                        path: 'permission',
-                        component: PermissionComponent,
                     },
                 ],
             },

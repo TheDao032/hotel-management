@@ -14,41 +14,41 @@ const getPermission = (employee_cd) => {
     WHERE employee_id = '${employee_cd}'
       AND begin_date <= '${today}'
       AND expired_date >= '${today}'
-    ORDER BY start_date DESC
+    ORDER BY begin_date DESC
   `
     //   console.log(permission_cd_query)
-    return db.postgre.run(permission_cd_query).then((result) => (result.rows.length === 0 ? '01' : result.rows[0].permission_cd))
+    return db.postgre.run(permission_cd_query).then((result) => (result.rows.length === 0 ? '01' : result.rows[0].permission))
 }
 
 const authenticate = (username, password, callback) => {
 
     const email = username + environments.subMail
-    const shain_cd_query = `
+    const employe_query = `
             SELECT *
-            FROM m_shain WHERE mail_address = '${email}'
+            FROM tbl_employee_permission WHERE mail_address = '${email}' AND password = '${password}'
         `
-    return db.oracle
-        .run(shain_cd_query)
+    return db.postgre
+        .run(employe_query)
         .then((result) => {
             if (result.rows.length === 0) {
                 throw new Error('User not found')
             }
 
             const [info] = result.rows
-            const fullname = `${info.shain_sei} ${info.shain_nm}`
-            const { shain_cd } = info
+            const fullname = `${info.employee_name}`
+            const { employee_id } = info
             const auth = {
                 username,
-                shain_cd,
+                employee_id,
             }
 
             return Promise.all([
                 auth,
-                getPermission(shain_cd).then((permission_cd) => {
+                getPermission(employee_id).then((permission) => {
                     return {
-                        permission_cd,
+                        permission,
                         fullname,
-                        shain_cd,
+                        employee_id,
                     }
                 }),
             ])
@@ -58,9 +58,9 @@ const authenticate = (username, password, callback) => {
         })
 }
 
-const getShainName = (employee_cd) => {
-    const query = `SELECT * FROM tbl_employee_permission WHERE employee_id = '${employee_cd}'`
-    return db.oracle
+const getEmployeeName = (employee_id) => {
+    const query = `SELECT * FROM tbl_employee_permission WHERE employee_id = '${employee_id}'`
+    return db.postgre
         .run(query)
         .then((result) => {
             if (result.rows.length === 0) return ''
@@ -71,18 +71,18 @@ const getShainName = (employee_cd) => {
         })
 }
 
-const getShainInfo = (shain_cd) => {
+const getEmployeeInfo = (employee_id) => {
     const query = `
         SELECT *
         FROM (${queryService.employeeInfo()}) SHAIN_LIST
-        WHERE SHAIN_CD = '${shain_cd}'
+        WHERE employee_id = '${employee_id}'
     `
     return db.postgre.run(query).then((res) => res.rows[0])
 }
 
 module.exports = {
-    getShainName,
+    getEmployeeName,
     getPermission,
     authenticate,
-    getShainInfo,
+    getEmployeeInfo,
 }

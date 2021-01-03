@@ -9,9 +9,9 @@
             >
                 <input
                     name="user_id"
-                    [(ngModel)]="user.user_id"
+                    [(ngModel)]="user.user_name"
                     type="text"
-                    placeholder="ユーザーID"
+                    placeholder="User Name"
                     required
                 />
                 <input
@@ -19,10 +19,10 @@
                     name="password"
                     [(ngModel)]="user.password"
                     type="password"
-                    placeholder="パスワード"
+                    placeholder="Password"
                     required
                 />
-                <button type="submit" class="btn btn-login">ログイン</button>
+                <button type="submit" class="btn btn-login">Sign In</button>
                 <p class="message" *ngIf="message">{{ message }}</p>
             </form>
         </div>

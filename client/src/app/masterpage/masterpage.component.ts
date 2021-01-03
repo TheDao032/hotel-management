@@ -27,7 +27,7 @@ export class MasterpageComponent implements OnInit {
     mobileQuery: MediaQueryList
     sharedService: SharedService
     @ViewChild('sidenav', { static: true }) sidenav: MatSidenav
-    title: String = 'this is title'
+    title: String = 'hotel-management'
     username: String = 'username'
     permission_cd = '01'
     now = Date.now()
@@ -59,15 +59,7 @@ export class MasterpageComponent implements OnInit {
         setInterval(() => {
             this.now = Date.now()
         }, 1000)
-        this.getSetting().subscribe((res: any) => {
-            if (res.data) {
-                this.setting = res.data
-            }
-        })
-        this.getTemaCategory()
 
-
-        // this.subMenuList = Submenu
     }
 
     ngOnInit() {
@@ -80,46 +72,13 @@ export class MasterpageComponent implements OnInit {
     }
 
 
-    //---------------- Updated By Giang
 
-    getTemaCategory() {
-        // this.sharedService.get_list_tema_category(false)
-        this.sharedService.get_list_tema_category().subscribe({
-            next: (next) => {
-                this.subMenuList = next.data
-                this.listLvl1 = this.filterItemsOfLevel('1')
-                this.listLvl2 = this.filterItemsOfLevel('2')
-                this.listLvl3 = this.filterItemsOfLevel('3')
-            },
-            error(err) {
-                console.log(err)
-            },
-        })
-    }
-
-    filterChildOfParent(parentId:string) {
-        return this.subMenuList.filter((x) => {
-            return x.level === '2' && x.parent_id === parentId
-        })
-    }
-
-    filterItemsOfLevel(level) {
-        return this.subMenuList.filter((x) => {
-            // console.log(x.level)
-            return x.level === level
-        })
-    }
 
     //---------------- END UPDATE
     getSetting() {
         return this.http.post(`${environment.apiUrl}/settings/get-color-setting`, {})
     }
     //Add New Function By TheDao
-    filterChildOfParentLv3(parentId:string) {
-        return this.subMenuList.filter((x) => {
-            return x.level === '3' && x.parent_id === parentId
-        })
-    }
     reLoad(id) {
         let currentRoute = "/training/list/" + id
 

@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core'
-import { MatDialogRef } from '@angular/material'
+import { MatButtonModule, MatDialogRef, MatIconModule, MatListModule, MatMenuModule, MatSidenavModule } from '@angular/material'
 
 // routes
 //Update By TheDao
+import { Back2topComponent } from '../shared/components/back2top/back2top.component'
 import { RoutingMypage } from './masterpage.routes'
 import { MasterpageComponent } from './masterpage.component'
 import { homePageComponent } from './homepage/homepage.component'
-import { PermissionComponent } from './maintenance/permission/permission.component'
 import { StringByteLimitPipe } from '../pipes/stringByteLimit'
-import { PermissionDialogComponent } from './maintenance/permission/permission-dialog'
 import { MailSettingsComponent } from './settings/mail-settings/mail-settings.component'
 import { EditMailComponent } from './settings/mail-settings/edit-mail/edit-mail.component'
 import { MailSentComponent } from './settings/mail-settings/mail-sent'
@@ -22,13 +21,15 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { TagsManagementComponent } from './settings/tags-management/tags-management.component';
 import { InsertUpdateTagComponent } from './settings/tags-management/insert-update-tag/insert-update-tag.component'
 import { ConfirmDeleteTagDialogComponent } from './settings/tags-management/confirm-delete-tag-dialog'
+import { FormsModule } from '@angular/forms'
+import { CommonModule } from '@angular/common'
+import { MaterialModule } from '@app/shared/material.module'
+import { SharedModule } from '../shared/shared.module'
 @NgModule({
-    imports: [RoutingMypage, FullCalendarModule, ZXingScannerModule],
+    imports: [SharedModule, RoutingMypage, FullCalendarModule, ZXingScannerModule, FormsModule, CommonModule, MaterialModule],
     declarations: [
-        PermissionDialogComponent,
         MasterpageComponent,
         homePageComponent,
-        PermissionComponent,
         StringByteLimitPipe,
         MailSettingsComponent,
         EditMailComponent,
@@ -42,10 +43,10 @@ import { ConfirmDeleteTagDialogComponent } from './settings/tags-management/conf
         TagsManagementComponent,
         InsertUpdateTagComponent,
         ConfirmDeleteTagDialogComponent,
+        Back2topComponent,
     ],
     exports: [],
     entryComponents: [
-        PermissionDialogComponent,
         MailSentComponent,
         ConfirmDiscardComponent,
         InsertUpdateTagComponent,
