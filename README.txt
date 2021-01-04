@@ -6,12 +6,12 @@
 
 ###Database (postgresql)
     $$Window:
-        $backup (create file .bat and copy below commandline into this file):
+        $backup (create file .bat and copy below commandline into this file and run):
             commandline: set pg_env="C:\Program Files\PostgreSQL\<version>\bin"
                         %pg_env%\pg_dump.exe -h <host_ip> -p <port> -U <db_username> <db_name> > <sql_file>
                         pause
             note: create <sql_file> first before backup
-        $restore
+        $restore (create file .bat and copy below commandline into this file and run):
             commandline:
                 set pg_env="C:\Program Files\PostgreSQL\<version>\bin"
                 %pg_env%\dropdb.exe -h <host_ip> -p <port> -U postgres <db_name>
