@@ -1,0 +1,667 @@
+{
+	"info": {
+		"_postman_id": "17523f31-b28b-4e17-b69e-b4af3032328c",
+		"name": "hotel-management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "employee",
+			"item": [
+				{
+					"name": "api/authentication/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\", \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/authentication/login",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"authentication",
+								"login"
+							]
+						},
+						"description": "body request:\n    username\n    password\n\nuse token for other API"
+					},
+					"response": []
+				},
+				{
+					"name": "api/emp/search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMDYzOTE1LCJleHAiOjE2MTExNTAzMTV9.U19FKks4a1w-0BzX-uMNfFYyR0Hagvm9u0jT6Nlm1J4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"param\": \"\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/emp/search",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"emp",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/emp/id",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMDYzOTE1LCJleHAiOjE2MTExNTAzMTV9.U19FKks4a1w-0BzX-uMNfFYyR0Hagvm9u0jT6Nlm1J4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_emp\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3303/api/emp/id",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3303",
+							"path": [
+								"api",
+								"emp",
+								"id"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customer",
+			"item": [
+				{
+					"name": "api/cus/info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMDcxODE4LCJleHAiOjE2MTExNTgyMTh9.Ur7yeSj5dZHgtipqvG1PmFbosWITKWEpJNiI5We-blI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"test\",\n    \"cardid\":\"123456789\",\n    \"birth\":\"2021-01-19\",\n    \"phonenumber\":\"0987654321\",\n    \"foreigner\":0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3303/api/cus/info",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3303",
+							"path": [
+								"api",
+								"cus",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "food",
+			"item": [
+				{
+					"name": "api/food/use-food",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_cus\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/food/use-food",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"food",
+								"use-food"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/food/add-food",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"coca\",\n    \"price\":10000,\n    \"quantity\":5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/food/add-food",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"food",
+								"add-food"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/food/cost",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_cus\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/food/cost",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"food",
+								"cost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/food/add-use-food",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_cus\":1,\n    \"id_food\":1,\n    \"number_food\":5,\n    \"date_create\": \"2021-01-22\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/food/add-use-food",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"food",
+								"add-use-food"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/food/change",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_fo\": 1,\n    \"name\": \"pepsi\",\n    \"price\":1000,\n    \"quantity\":5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/food/change",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"food",
+								"change"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "check-in",
+			"item": [
+				{
+					"name": "api/check-in/info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ0NDk1LCJleHAiOjE2MTEzMzA4OTV9.QSfMUWuZkiKq2WivjllHOutjT5dZ8iMjoc2Pdn9Z9Uo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_emp\": \"htm0001\",\n    \"id_cus\": 1,\n    \"id_room\": 1,\n    \"number_people\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/check-in/info",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"check-in",
+								"info"
+							]
+						},
+						"description": "add record to table tbl_check_in"
+					},
+					"response": []
+				},
+				{
+					"name": "api/check-in/change",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ3MjEzLCJleHAiOjE2MTEzMzM2MTN9.iEhM2LE6q-3m8cdJrXlcrDmXmDhZIJOEDVk0MBi8DbE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_ci\":\"1\",\n    \"id_room\":\"1\",\n    \"number_people\":\"4\",\n    \"id_emp\":\"htm0001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/check-in/change",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"check-in",
+								"change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/check-in/search-status-ci",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ3MjEzLCJleHAiOjE2MTEzMzM2MTN9.iEhM2LE6q-3m8cdJrXlcrDmXmDhZIJOEDVk0MBi8DbE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/check-in/search-status-ci",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"check-in",
+								"search-status-ci"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "check-out",
+			"item": [
+				{
+					"name": "api/check-out/out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ3MjEzLCJleHAiOjE2MTEzMzM2MTN9.iEhM2LE6q-3m8cdJrXlcrDmXmDhZIJOEDVk0MBi8DbE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_emp\":\"htm0001\",\n    \"id_check_in\": 1,\n    \"price\": 100000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/check-out/out",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"check-out",
+								"out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/check-out/statistical",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ3MjEzLCJleHAiOjE2MTEzMzM2MTN9.iEhM2LE6q-3m8cdJrXlcrDmXmDhZIJOEDVk0MBi8DbE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"from\":\"2021-01-01\",\n    \"to\":\"2021-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/check-out/statistical",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"check-out",
+								"statistical"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "api/acc/cre",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6MSwiaWF0IjoxNjExMjQ2Mjg0LCJleHAiOjE2MTEzMzI2ODR9.hzP5gO6zuOOuCnEPuj-IEv8bzYjBmfa4whyzYpxHvFc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"test\",\n    \"permission\":2,\n    \"begin\":\"2020-01-21\",\n    \"expired\":\"2022-01-21\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/acc/cre",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"acc",
+								"cre"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "room",
+			"item": [
+				{
+					"name": "api/room/search",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfZW1wX2FjYyI6bnVsbCwiaWF0IjoxNjExMjUwMjg0LCJleHAiOjE2MTEzMzY2ODR9.pYn60Jo_loP1voLtmnlVrOUfWPiIcod9jD-cKF4kgUM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"param\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://192.168.10.101:3302/api/room/search",
+							"protocol": "http",
+							"host": [
+								"192",
+								"168",
+								"10",
+								"101"
+							],
+							"port": "3302",
+							"path": [
+								"api",
+								"room",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

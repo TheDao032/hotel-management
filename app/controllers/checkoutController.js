@@ -1,8 +1,8 @@
 const express = require('express')
-const dateformat = require('dateformat')
-const Regex = require('regex')
+// const dateformat = require('dateformat')
+// const Regex = require('regex')
 const moment = require('moment')
-const employee = require('../middlewares/employee')
+// const employee = require('../middlewares/employee')
 
 const router = express.Router()
 const db = require('../models/db')
@@ -11,7 +11,6 @@ router.post('/out', async (req, res) => {
     const { id_emp, id_check_in, price } = req.body
 
     const toNumber = (number) => (number === '' || number === undefined || number === null || Number.isNaN(Number(number)) ? 'NULL' : number)
-    const toDate = (date) => (date && !Number.isNaN(Number(Date.parse(date))) && `'${dateformat(date, 'yyyy/mm/dd')}'`) || 'NULL'
     const toText = (text) => (text && `'${text}'`) || 'NULL'
 
     const checkoutQuery = `
@@ -19,9 +18,10 @@ router.post('/out', async (req, res) => {
         VALUES (
             ${toText(id_emp)},
             ${toNumber(id_check_in)},
-            ${toNumber(price)},
-        )
+            ${toNumber(price)}
+        );
     `
+    console.log(checkoutQuery)
 
     await db.postgre.run(checkoutQuery).catch((err) => {
         return res.status(500).json({
@@ -42,9 +42,9 @@ router.post('/statistical', async (req, res) => {
     const statisticalQuery = `
         SELECT SUM(price_co) as price
             FROM tbl_check_out
-        WHERE
-        AND datecreate_co <= '${dateTo}'
-        AND end_date >= '${dateFrom}'
+        WHERE 
+            datecreate_co <= '${dateTo}'
+            AND datecreate_co >= '${dateFrom}'
     `
 
     const statisticalResult = await db.postgre.run(statisticalQuery).catch((err) => {
