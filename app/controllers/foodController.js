@@ -130,11 +130,10 @@ router.post('/add', async (req, res) => {
     })
 })
 
-router.post('/change', (req, res) => {
+router.post('/change', async (req, res) => {
     const { id_ci, name, price, quantity } = req.body
 
     const toNumber = (number) => (number === '' || number === undefined || number === null || Number.isNaN(Number(number)) ? 'NULL' : number)
-    const toDate = (date) => (date && !Number.isNaN(Number(Date.parse(date))) && `'${dateformat(date, 'yyyy/mm/dd')}'`) || 'NULL'
     const toText = (text) => (text && `'${text}'`) || 'NULL'
 
     let status = 1
