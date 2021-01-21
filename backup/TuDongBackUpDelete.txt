@@ -1,0 +1,4 @@
+1. Mo TaskScheduler tren Window
+2. Chon Action => Create Basic Task ... => Dien vao cac thong tin can thiet => Next => ... => Start a Program:
+	Chon duong dan den file BKWithPassword.bat | file RemoveBackupHistory.bat (doi voi Task Remove)
+3. Finish

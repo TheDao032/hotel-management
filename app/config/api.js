@@ -9,6 +9,7 @@ const roomController = require('../controllers/roomController')
 const customerController = require('../controllers/customerController')
 const checkinController = require('../controllers/checkinController')
 const foodController = require('../controllers/foodController')
+const checkoutController = require('../controllers/checkoutController')
 
 // new or fixed
 API.use('/home', homePageController)
@@ -28,5 +29,7 @@ API.use('/acc', accountController)
 API.use('/check-in', checkinController)
 
 API.use('/food', foodController)
+
+API.use('/check-out', checkoutController)
 
 module.exports = API

@@ -91,4 +91,29 @@ router.get('/search-ci', async (req, res) => {
     })
 })
 
+router.post('/change', (req, res) => {
+    const { id_ci, id_room, number_people, id_emp} = req.body
+
+    const toNumber = (number) => (number === '' || number === undefined || number === null || Number.isNaN(Number(number)) ? 'NULL' : number)
+    const toDate = (date) => (date && !Number.isNaN(Number(Date.parse(date))) && `'${dateformat(date, 'yyyy/mm/dd')}'`) || 'NULL'
+    const toText = (text) => (text && `'${text}'`) || 'NULL'
+
+    const updateQuery = `
+        UPDATE tbl_check_in
+        SET id_room_ci = ${toNumber(id_room)},
+            numpeople_ci = ${toNumber(number_people)},
+            id_emp_ci = ${toText(id_emp)}
+        WHERE id_ci = ${toNumber(id_ci)}
+    `
+    await db.postgre.run(updateQuery).catch((err) => {
+        return res.status(500).json({
+            err,
+            code: 0,
+        })
+    })
+    return res.status(200).json({
+        code: 1,
+    })
+})
+
 module.exports = router
