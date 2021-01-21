@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 const ldap = require('ldapjs')
 const moment = require('moment')
 const environments = require('../environments/environment')
@@ -10,45 +9,42 @@ const getPermission = (employee_cd) => {
 
     const permission_cd_query = `
     SELECT *
-    FROM tbl_employee_permission
-    WHERE employee_id = '${employee_cd}'
-      AND begin_date <= '${today}'
-      AND expired_date >= '${today}'
-    ORDER BY begin_date DESC
+    FROM tbl_account
+    WHERE id_emp_acc = '${employee_cd}'
+      AND datebegin_acc <= '${today}'
+      AND dateexpired_acc >= '${today}'
+    ORDER BY datebegin_acc DESC
   `
-    //   console.log(permission_cd_query)
-    return db.postgre.run(permission_cd_query).then((result) => (result.rows.length === 0 ? '01' : result.rows[0].permission))
+    return db.postgre.run(permission_cd_query).then((result) => (result.rows.length === 0 ? '0' : result.rows[0].id_per_acc))
 }
 
 const authenticate = (username, password, callback) => {
 
-    const email = username + environments.subMail
-    const employe_query = `
+    const employee_query = `
             SELECT *
-            FROM tbl_employee_permission WHERE mail_address = '${email}' AND password = '${password}'
+            FROM tbl_account WHERE username_acc = '${username}' AND pass_acc = '${password}'
         `
     return db.postgre
-        .run(employe_query)
+        .run(employee_query)
         .then((result) => {
             if (result.rows.length === 0) {
-                throw new Error('User not found')
-            }
+                throw new Error('User not found') }
 
             const [info] = result.rows
-            const fullname = `${info.employee_name}`
-            const { employee_id } = info
+            const username = `${info.username_acc}`
+            const { id_emp_acc } = info
             const auth = {
                 username,
-                employee_id,
+                id_emp_acc,
             }
 
             return Promise.all([
                 auth,
-                getPermission(employee_id).then((permission) => {
+                getPermission(id_emp_acc).then((permission) => {
                     return {
                         permission,
-                        fullname,
-                        employee_id,
+                        username,
+                        id_emp_acc,
                     }
                 }),
             ])
@@ -59,12 +55,12 @@ const authenticate = (username, password, callback) => {
 }
 
 const getEmployeeName = (employee_id) => {
-    const query = `SELECT * FROM tbl_employee_permission WHERE employee_id = '${employee_id}'`
+    const query = `SELECT * FROM tbl_employee WHERE id_emp_acc = '${employee_id}'`
     return db.postgre
         .run(query)
         .then((result) => {
             if (result.rows.length === 0) return ''
-            return `${result.rows[0].employee_name || ''} ${result.rows[0].mail_address || ''}`
+            return `${result.rows[0].name_emp || ''}`
         })
         .catch(() => {
             return ''
@@ -74,8 +70,8 @@ const getEmployeeName = (employee_id) => {
 const getEmployeeInfo = (employee_id) => {
     const query = `
         SELECT *
-        FROM (${queryService.employeeInfo()}) SHAIN_LIST
-        WHERE employee_id = '${employee_id}'
+        FROM (${queryService.employeeInfo()}) employee_list
+        WHERE id_emp = '${employee_id}'
     `
     return db.postgre.run(query).then((res) => res.rows[0])
 }

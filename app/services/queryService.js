@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 const employeeInfo = () => {
     return `
-        SELECT * from tbl_employee_permission
+        SELECT * from tbl_employee
     `
 }
 

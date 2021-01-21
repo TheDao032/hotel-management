@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const express = require('express')
 
 const router = express.Router()
@@ -32,17 +31,17 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/verify-token', authentication.verifyToken, (req, res) => {
-    const { employee_id, permission_cd } = req.user
+    const { id_emp_acc, permission } = req.user
     authenticationService
-        .getEmployeeName(employee_id)
-        .then((fullname) => {
+        .getEmployeeName(id_emp_acc)
+        .then((employee_name) => {
             return res.json({
                 code: 0,
                 data: {
                     user: {
-                        employee_id,
-                        permission_cd,
-                        fullname,
+                        id_emp_acc,
+                        permission,
+                        employee_name,
                     },
                 },
             })

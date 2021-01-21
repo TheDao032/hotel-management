@@ -22,9 +22,9 @@ const verifyToken = (req, res, next) => {
         // passport.authenticate('jwt', { session: false })
         const user = decode
         return authenticationService
-            .getPermission(user.shain_cd)
-            .then((permission_cd) => {
-                user.permission_cd = permission_cd
+            .getPermission(user.id_emp_acc)
+            .then((permission) => {
+                user.permission = permission
                 req.user = user
             })
             .catch(() =>

@@ -1,4 +1,3 @@
-﻿/* eslint-disable prettier/prettier */
 // route
 const express = require('express')
 
@@ -15,10 +14,6 @@ router.use(log)
 const authenticationController = require('../controllers/authenticationController')
 
 router.use('/api/authentication', authenticationController)
-
-// const testController = require('../controllers/testController')
-
-// router.use('/api/test', testController)
 
 // API
 const API = require('./api')

@@ -1,6 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-console */
-/* eslint-disable no-return-assign */
 const pg = require('pg')
 const fs = require('fs')
 const path = require('path')
