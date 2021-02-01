@@ -124,11 +124,11 @@ CREATE TABLE public.tbl_account (
     id_acc text NOT NULL,
     username_acc text,
     pass_acc text,
-    id_emp_acc integer,
     id_per_acc integer,
     status_acc integer,
     datebegin_acc date,
-    dateexpired_acc date
+    dateexpired_acc date,
+    id_emp_acc text
 );
 
 
@@ -179,11 +179,11 @@ ALTER SEQUENCE public."tbl_check_in_ID_ci_seq" OWNED BY public.tbl_check_in.id_c
 
 CREATE TABLE public.tbl_check_out (
     id_co integer NOT NULL,
-    id_emp_co integer,
     id_ci_co integer,
     price_co integer,
     datecreate_co date,
-    status_co integer
+    status_co integer,
+    id_emp_co text
 );
 
 
@@ -468,10 +468,10 @@ ALTER TABLE ONLY public.tbl_use_food ALTER COLUMN id_uf SET DEFAULT nextval('pub
 -- Data for Name: tbl_account; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.tbl_account (id_acc, username_acc, pass_acc, id_emp_acc, id_per_acc, status_acc, datebegin_acc, dateexpired_acc) FROM stdin;
-htm0001	admin	123	1	1	1	2021-01-10	2022-01-15
-htm0002	employee_001	1	2	2	1	2021-01-10	2022-01-15
-htm2165	tester	htm2021	\N	2	0	2021-01-18	2022-01-18
+COPY public.tbl_account (id_acc, username_acc, pass_acc, id_per_acc, status_acc, datebegin_acc, dateexpired_acc, id_emp_acc) FROM stdin;
+htm0001	admin	123	1	1	2021-01-10	2022-01-15	\N
+htm0002	employee_001	1	2	1	2021-01-10	2022-01-15	\N
+htm2165	tester	htm2021	2	0	2021-01-18	2022-01-18	\N
 \.
 
 
@@ -480,7 +480,8 @@ htm2165	tester	htm2021	\N	2	0	2021-01-18	2022-01-18
 --
 
 COPY public.tbl_check_in (id_ci, id_cus_ci, id_room_ci, numpeople_ci, datecheckin_ci, status_ci, id_emp_ci) FROM stdin;
-1	1	1	5	\N	0	htm0001
+2	1	1	5	\N	0	htm0001
+1	1	1	4	\N	0	htm0001
 \.
 
 
@@ -488,7 +489,8 @@ COPY public.tbl_check_in (id_ci, id_cus_ci, id_room_ci, numpeople_ci, datechecki
 -- Data for Name: tbl_check_out; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.tbl_check_out (id_co, id_emp_co, id_ci_co, price_co, datecreate_co, status_co) FROM stdin;
+COPY public.tbl_check_out (id_co, id_ci_co, price_co, datecreate_co, status_co, id_emp_co) FROM stdin;
+1	1	100000	\N	\N	htm0001
 \.
 
 
@@ -516,9 +518,10 @@ COPY public.tbl_employee (id_emp, name_emp, cardid_emp, phonenumber_emp, mail_em
 --
 
 COPY public.tbl_food (id_fo, name_fo, price_fo, quantity_fo, status_fo) FROM stdin;
-1	Coca	15000	100	1
 2	Tiger	30000	200	1
 3	Snack bắp	10000	200	1
+4	coca	10000	5	1
+1	\N	1000	5	1
 \.
 
 
@@ -571,6 +574,7 @@ COPY public.tbl_room (id_room, id_rr_room, name_room, status_room) FROM stdin;
 --
 
 COPY public.tbl_use_food (id_uf, id_fo_uf, numuse_uf, id_cus_uf, dateuse_uf, status_uf) FROM stdin;
+1	1	1	5	2021-01-22	\N
 \.
 
 
@@ -592,14 +596,14 @@ SELECT pg_catalog.setval('public."tbl_Permission_ID_per_seq"', 2, true);
 -- Name: tbl_check_in_ID_ci_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."tbl_check_in_ID_ci_seq"', 1, true);
+SELECT pg_catalog.setval('public."tbl_check_in_ID_ci_seq"', 2, true);
 
 
 --
 -- Name: tbl_check_out_ID_co_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."tbl_check_out_ID_co_seq"', 1, false);
+SELECT pg_catalog.setval('public."tbl_check_out_ID_co_seq"', 1, true);
 
 
 --
@@ -613,7 +617,7 @@ SELECT pg_catalog.setval('public."tbl_employee_permission_ID_emp_seq"', 2, true)
 -- Name: tbl_food_ID_fo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."tbl_food_ID_fo_seq"', 3, true);
+SELECT pg_catalog.setval('public."tbl_food_ID_fo_seq"', 4, true);
 
 
 --
@@ -634,7 +638,7 @@ SELECT pg_catalog.setval('public."tbl_room_ID_room_seq"', 14, true);
 -- Name: tbl_use_food_ID_uf_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."tbl_use_food_ID_uf_seq"', 1, false);
+SELECT pg_catalog.setval('public."tbl_use_food_ID_uf_seq"', 1, true);
 
 
 --
